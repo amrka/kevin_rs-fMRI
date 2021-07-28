@@ -63,17 +63,14 @@ for subj in *;do
             echo $img
             # to get the no of img
             img_no=`echo "$img" | sed  's/Anatomical_fMRI_IsotX/''/g' | sed 's/'P1.nii'/''/g'`
-            cp $img ../../raw_data_bids/${subj}/anat/sub-${subj}_X${img_no}_T2w.nii.gz
+            imcp $img ../../raw_data_bids/${subj}/anat/sub-${subj}_X${img_no}_T2w
+            fslchfiletype NIFTI_GZ ../../raw_data_bids/${subj}/anat/sub-${subj}_X${img_no}_T2w
         elif [ $dim4 == 900 ] && [ $pixdim1 == 5.000000 ] && [ $pixdim2 == 5.000000 ] && [ $pixdim3 == 5.000000 ];then
             echo $img
             img_no=`echo "$img" | sed  's/EPIGEAx_Isot05mmX/''/g' | sed 's/'P1.nii'/''/g'`
-            cp $img ../../raw_data_bids/${subj}/func/sub-${subj}_X${img_no}_bold.nii.gz
+            imcp $img ../../raw_data_bids/${subj}/func/sub-${subj}_X${img_no}_bold
+            fslchfiletype NIFTI_GZ ../../raw_data_bids/${subj}/func/sub-${subj}_X${img_no}_bold
         fi
-        # for rs in ${rs_array[@]};do
-        #     img_no=`echo "$img" | sed  's/EPIGEAx_Isot05mmX/''/g' | sed 's/'P1.nii'/''/g'`
-        #     cp $img ../../raw_data_bids/${subj}/func/sub-${subj}_X${img_no}_bold.nii.gz
-        # done
     done
     cd ..
 done
-# rs_array+=($img)
