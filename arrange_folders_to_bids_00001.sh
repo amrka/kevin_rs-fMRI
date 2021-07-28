@@ -86,3 +86,18 @@ fslorient \
 
 fslorient -setqformcode \
 /Volumes/Amr_1TB/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
+
+
+# after all of this the final directory looks like:
+# ├── B231020
+# │   ├── anat
+# │   │   └── sub-B231020_X5_T2w.nii.gz
+# │   └── func
+# │       ├── sub-B231020_X18_bold.nii.gz
+# │       └── sub-B231020_X8_bold.nii.gz
+# └── B261020
+#     ├── anat
+#     │   └── sub-B261020_X9_T2w.nii.gz
+#     └── func
+#         ├── sub-B261020_X12_bold.nii.gz
+#         └── sub-B261020_X22_bold.nii.gz
