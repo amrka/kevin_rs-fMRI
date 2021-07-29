@@ -2,7 +2,7 @@
 
 # arrange the raw data folders to match the bids format:
 
-cd /Volumes/Amr_1TB/Kevin
+cd /home/in/aeed/Work/Kevin
 mkdir raw_data_bids
 
 # A251120/
@@ -81,11 +81,11 @@ done
 
 fslorient \
 -setqform 5 0 0 0 0 5 0 0 0 0 5 0 0 0 0 1 \
-/Volumes/Amr_1TB/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
+/home/in/aeed/Work/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
 
 
 fslorient -setqformcode \
-/Volumes/Amr_1TB/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
+/home/in/aeed/Work/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
 
 
 # after all of this the final directory looks like:
