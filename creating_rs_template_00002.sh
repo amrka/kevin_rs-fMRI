@@ -24,3 +24,6 @@ buildtemplateparallel.sh \
 -j 200 \
 -r 1 \
 -o epi_templ vol*.nii.gz
+
+# the skull mask was drawn manually using itksnap (epi_temp_mask.nii.gz), then
+# fslmaths epi_templtemplate.nii.gz -mul epi_temp_mask.nii.gz epi_temp_snapped
