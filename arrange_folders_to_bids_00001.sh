@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# subject B191120, the prestimulation run is divided into three runs, 300 vol each
+# so we merge them
+
+cd /Volumes/Amr_1TB/Kevin/Kevin_rs_fMRI_raw_data/B191120
+# delete in case it exists
+imrm EPIGEAx_Isot05mmX5P1*
+
+fslmerge \
+-t EPIGEAx_Isot05mmX5P1.nii  \
+EPIGEAx_Isot05mmX16P1.nii EPIGEAx_Isot05mmX17P1.nii EPIGEAx_Isot05mmX18P1.nii
+
+# then we decompress
+gzip -d EPIGEAx_Isot05mmX5P1.nii.gz
+
+
 # arrange the raw data folders to match the bids format:
 
 cd /home/in/aeed/Work/Kevin
@@ -75,17 +90,6 @@ for subj in *;do
     cd ..
 done
 
-
-# in subject B191120, the header of the pre-stimulation session was a bit different, because it was a result of merging 3 rs sessions
-# to rectify that
-
-fslorient \
--setqform 5 0 0 0 0 5 0 0 0 0 5 0 0 0 0 1 \
-/home/in/aeed/Work/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
-
-
-fslorient -setqformcode \
-/home/in/aeed/Work/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
 
 
 # after all of this the final directory looks like:
