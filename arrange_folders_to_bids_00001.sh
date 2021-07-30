@@ -76,17 +76,6 @@ for subj in *;do
 done
 
 
-# in subject B191120, the header of the pre-stimulation session was a bit different, because it was a result of merging 3 rs sessions
-# to rectify that
-
-fslorient \
--setqform 5 0 0 0 0 5 0 0 0 0 5 0 0 0 0 1 \
-/Volumes/Amr_1TB/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
-
-
-fslorient -setqformcode \
-/Volumes/Amr_1TB/Kevin/raw_data_bids/B191120/func/sub-B191120_X5_bold.nii.gz
-
 
 # after all of this the final directory looks like:
 # ├── B231020
