@@ -4,6 +4,9 @@
 # so we merge them
 
 cd /Volumes/Amr_1TB/Kevin/Kevin_rs_fMRI_raw_data/B191120
+# delete in case it exists
+imrm EPIGEAx_Isot05mmX5P1*
+
 fslmerge \
 -t EPIGEAx_Isot05mmX5P1.nii  \
 EPIGEAx_Isot05mmX16P1.nii EPIGEAx_Isot05mmX17P1.nii EPIGEAx_Isot05mmX18P1.nii
