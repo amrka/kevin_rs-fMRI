@@ -3,7 +3,7 @@
 # subject B191120, the prestimulation run is divided into three runs, 300 vol each
 # so we merge them
 
-cd /Volumes/Amr_1TB/Kevin/Kevin_rs_fMRI_raw_data/B191120
+cd /home/in/aeed/Work/Kevin/Kevin_rs_fMRI_raw_data/B191120
 # delete in case it exists
 imrm EPIGEAx_Isot05mmX5P1*
 
