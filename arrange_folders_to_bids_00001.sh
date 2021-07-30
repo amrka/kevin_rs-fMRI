@@ -9,7 +9,7 @@ fslmerge \
 EPIGEAx_Isot05mmX16P1.nii EPIGEAx_Isot05mmX17P1.nii EPIGEAx_Isot05mmX18P1.nii
 
 # then we decompress
-gzip -d EPIGEAx_Isot05mmX5P1.nii
+gzip -d EPIGEAx_Isot05mmX5P1.nii.gz
 
 
 # arrange the raw data folders to match the bids format:
