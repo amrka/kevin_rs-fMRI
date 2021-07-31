@@ -2,6 +2,7 @@
 
 import re
 import os
+import sys
 from nipype.interfaces.matlab import MatlabCommand
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,8 +19,11 @@ cfg = dict(execution={'remove_unnecessary_outputs': False})
 config.update_config(cfg)
 # ========================================================================================================
 # In[2]:
+# instead of having to change the script between different copmuters and os
+# we pass the directory with the name from the bash
+origin_dir = sys.argv[1]
 
-experiment_dir = '/media/amr/Amr_4TB/Work/Kevin/'
+experiment_dir = '{0}/Kevin/'.format(origin_dir)
 
 subject_list = ['A021120',
                 'A051120',
@@ -41,8 +45,8 @@ run_list = ['run-01',
             'run-02']
 
 
-output_dir =  '/media/amr/Amr_4TB/Work/Kevin/resting_state_preproc_outputdir'
-working_dir = '/media/amr/Amr_4TB/Work/Kevin/resting_state_preproc_workingdir'
+output_dir =  '{0}/Kevin/resting_state_preproc_outputdir'.format(origin_dir)
+working_dir = '{0}/Kevin/resting_state_preproc_workingdir'.format(origin_dir)
 
 resting_fmri_preproc = Workflow(name='resting_fmri_preproc')
 resting_fmri_preproc.base_dir = opj(experiment_dir, working_dir)
@@ -95,11 +99,11 @@ datasink.inputs.substitutions = substitutions
 # In[6]:
 
 #
-template_brain = '/media/amr/Amr_4TB/Work/Kevin/std_master.nii'
-template_mask = '/media/amr/Amr_4TB/Work/Kevin/std_master_mask.nii'
+template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
+template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 # custom maded template, see creating_rs_template_00002.sh script
-epi_brain = '/media/amr/Amr_4TB/Work/Kevin/rs-temp/epi_temp_snapped.nii.gz'
-epi_mask = '/media/amr/Amr_4TB/Work/Kevin/rs-temp/epi_temp_mask.nii.gz'
+epi_brain = '{0}/Kevin/rs-temp/epi_temp_snapped.nii.gz'.format(origin_dir)
+epi_mask = '{0}/Kevin/rs-temp/epi_temp_mask.nii.gz'.format(origin_dir)
 
 TR = 2.0
 
