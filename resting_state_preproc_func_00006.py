@@ -27,7 +27,7 @@ origin_dir = sys.argv[1]
 experiment_dir = '{0}/Kevin/'.format(origin_dir)
 
 subject_list = ['A021120',
-                'A051120',
+                # 'A051120',
                 # 'A231120',
                 # 'A251120',
                 # 'A301020',
@@ -325,7 +325,7 @@ resting_fmri_preproc_func.connect([
 
     (selectfiles_func, roi, [('func', 'in_file')]),
 
-    (selectfiles_func, McFlirt, [('Func', 'in_file')]),
+    (selectfiles_func, McFlirt, [('func', 'in_file')]),
     (roi, McFlirt, [('roi_file', 'ref_file')]),
     #
     (McFlirt, Plot_Motion, [('par_file', 'motion_par'),
