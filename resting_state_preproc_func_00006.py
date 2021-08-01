@@ -247,7 +247,8 @@ func_2_template.inputs.float = True
 smoothing_2d = Node(afni.Merge(), name='smoothing_2d')
 smoothing_2d.inputs.out_file = 'afni_2d_smoothed.nii.gz'
 smoothing_2d.inputs.doall = True
-smoothing_2d.iterables = ('blurfwhm_bx_by_bz', [[0, 0, 0], [6.5, 6.5, 6.5], [8, 8, 8], [6.5, 6.5, 0]])
+smoothing_2d.iterables = ('blurfwhm_bx_by_bz', [[0, 0, 0], [6.5, 6.5, 6.5], [8, 8, 8],
+                                                [6.5, 6.5, 0], [10, 10, 10], [10, 10, 0]])
 
 # ========================================================================================================
 # In[18]:
