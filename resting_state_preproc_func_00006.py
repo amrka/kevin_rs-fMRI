@@ -47,11 +47,11 @@ run_list = ['run-01',
             'run-02']
 
 
-output_dir =  '{0}/Kevin/resting_state_preproc_outputdir'.format(origin_dir)
-working_dir = '{0}/Kevin/resting_state_preproc_workingdir'.format(origin_dir)
+output_dir =  '{0}/Kevin/resting_state_preproc_func_outputdir'.format(origin_dir)
+working_dir = '{0}/Kevin/resting_state_preproc_func_workingdir'.format(origin_dir)
 
-resting_fmri_preproc = Workflow(name='resting_fmri_preproc')
-resting_fmri_preproc.base_dir = opj(experiment_dir, working_dir)
+resting_fmri_preproc_func = Workflow(name='resting_fmri_preproc_func')
+resting_fmri_preproc_func.base_dir = opj(experiment_dir, working_dir)
 
 # =====================================================================================================
 # In[3]:
@@ -67,7 +67,7 @@ infosource.iterables = [('subject_id', subject_list),
 
 #anatomical images
 templates_anat = {
-'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain'
+'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_func_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain'
              }
 
 selectfiles_anat = Node(SelectFiles(templates_anat,
@@ -316,7 +316,7 @@ melodic.iterables = ('dim', [15, 20, 25])
 # In[24]:
 
 
-resting_fmri_preproc.connect([
+resting_fmri_preproc_func.connect([
 
 
     (infosource, selectfiles_anat,[('subject_id','subject_id')]),
@@ -376,7 +376,7 @@ resting_fmri_preproc.connect([
 
 ])
 
-resting_fmri_preproc.write_graph(graph2use='colored', format='png', simple_form=True)
+resting_fmri_preproc_func.write_graph(graph2use='colored', format='png', simple_form=True)
 
-# resting_fmri_preproc.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
-resting_fmri_preproc.run('MultiProc', plugin_args={'n_procs': 8})
+# resting_fmri_preproc_func.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
+resting_fmri_preproc_func.run('MultiProc', plugin_args={'n_procs': 8})
