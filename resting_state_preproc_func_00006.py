@@ -67,7 +67,8 @@ infosource.iterables = [('subject_id', subject_list),
 
 #anatomical images
 templates_anat = {
-             'anat'     : 'raw_data_bids/{subject_id}/anat/sub-{subject_id}_X*_T2w.nii.gz'
+'anat': '{0}/Kevin/resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/\
+_subject_id_{subject_id}/biasfield_correction_anat/sub-{subject_id}_X*_T2w_corrected.nii.gz'.format(origin_dir)
              }
 
 selectfiles_anat = Node(SelectFiles(templates_anat,
@@ -76,7 +77,7 @@ selectfiles_anat = Node(SelectFiles(templates_anat,
 
 #functional runs
 templates_func = {
-             'func'     : 'raw_data_bids/{subject_id}/func/sub-{subject_id}-X*-rs_bold_{run_id}.nii.gz'
+'func': 'raw_data_bids/{subject_id}/func/sub-{subject_id}-X*-rs_bold_{run_id}.nii.gz'
              }
 
 selectfiles_func = Node(SelectFiles(templates_func,
