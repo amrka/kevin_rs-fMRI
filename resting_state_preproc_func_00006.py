@@ -1,5 +1,5 @@
 # In[1]:
-
+# >>> python resting_state_preproc_func_00006.py <directory of the bids data>
 import re
 import os
 import sys
