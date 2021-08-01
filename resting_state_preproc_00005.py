@@ -43,8 +43,8 @@ subject_list = ['A021120',
 
 
 
-run_list = ['run1',
-            'run2']
+run_list = ['run-01',
+            'run-02']
 
 
 output_dir =  '{0}/Kevin/resting_state_preproc_outputdir'.format(origin_dir)
