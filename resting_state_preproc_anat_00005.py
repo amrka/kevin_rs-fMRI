@@ -162,7 +162,8 @@ resting_fmri_preproc_anat.connect([
     (infosource, selectfiles_anat,[('subject_id','subject_id')]),
 
     (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')]),
-    (biasfield_correction_anat, reg_T1_2_temp, [('output_image', 'moving_image')]),
+    (biasfield_correction_anat, brain_extraction_anat, [('output_image','in_file')]),
+    (brain_extraction_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
     # # ======================================datasink============================================
     # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
     # # does not work for this particular node
