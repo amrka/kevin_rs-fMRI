@@ -89,7 +89,7 @@ datasink.inputs.substitutions = substitutions
 # ========================================================================================================
 # In[6]:
 
-#
+# todo: solve the issue with the template
 template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
 template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 
