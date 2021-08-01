@@ -90,8 +90,8 @@ datasink.inputs.substitutions = substitutions
 # In[6]:
 
 #
-template_brain = '{0}/Kevin/std_original.nii'.format(origin_dir)
-template_mask = '{0}/Kevin/std_original_mask.nii'.format(origin_dir)
+template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
+template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 
 # =======================================================================================================
 # In[8]:
