@@ -1,5 +1,5 @@
 # In[1]:
-
+# >>> python resting_state_preproc_anat_00005.py <directory of the bids data>
 import re
 import os
 import sys
