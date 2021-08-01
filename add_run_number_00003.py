@@ -21,12 +21,12 @@ print("This is subject -> {0}".format(subj_no))
 
 
 if int(re.search(acq_pattern, file_list[0]).group(1)) > int(re.search(acq_pattern, file_list[1]).group(1)):
-    os.rename(file_list[0], "sub-{0}-X{1}-rs_bold_run2.nii.gz".format(subj_no,
+    os.rename(file_list[0], "sub-{0}-X{1}-rs_bold_run-02.nii.gz".format(subj_no,
                                                                       re.search(acq_pattern, file_list[0]).group(1)))
-    os.rename(file_list[1], "sub-{0}-X{1}-rs_bold_run1.nii.gz".format(subj_no,
+    os.rename(file_list[1], "sub-{0}-X{1}-rs_bold_run-01.nii.gz".format(subj_no,
                                                                       re.search(acq_pattern, file_list[1]).group(1)))
 else:
-    os.rename(file_list[0], "sub-{0}-X{1}-rs_bold_run1.nii.gz".format(subj_no,
+    os.rename(file_list[0], "sub-{0}-X{1}-rs_bold_run-01.nii.gz".format(subj_no,
                                                                       re.search(acq_pattern, file_list[0]).group(1)))
-    os.rename(file_list[1], "sub-{0}-X{1}-rs_bold_run2.nii.gz".format(subj_no,
+    os.rename(file_list[1], "sub-{0}-X{1}-rs_bold_run-02.nii.gz".format(subj_no,
                                                                       re.search(acq_pattern, file_list[1]).group(1)))

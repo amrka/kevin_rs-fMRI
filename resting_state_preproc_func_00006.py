@@ -1,7 +1,9 @@
 # In[1]:
-
+# >>> python resting_state_preproc_func_00006.py <directory of Kevin>
 import re
 import os
+import sys
+import glob
 from nipype.interfaces.matlab import MatlabCommand
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,61 +18,70 @@ import nipype.interfaces.fsl as fsl
 from nipype import config
 cfg = dict(execution={'remove_unnecessary_outputs': False})
 config.update_config(cfg)
-
-
-MatlabCommand.set_default_paths('/Users/amr/Downloads/spm12')
-MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
-
-# import nipype.interfaces.matlab as mlab
-# mlab.MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
-# mlab.MatlabCommand.set_default_paths('/home/amr/Documents/MATLAB/toolbox/spm8')
-
 # ========================================================================================================
 # In[2]:
+# instead of having to change the script between different copmuters and os
+# we pass the directory with the name from the bash
+origin_dir = sys.argv[1]
 
-experiment_dir = '/media/amr/Amr_4TB/Work/October_Acquistion/'
-# 288 -> hydrocephaly
-# 271, 272 -> medtomidine and died
+experiment_dir = '{0}/Kevin/'.format(origin_dir)
+
+subject_list = ['A021120',
+                # 'A051120',
+                # 'A231120',
+                # 'A251120',
+                # 'A301020',
+                # 'B201120',
+                # 'B261020',
+                # 'A031120',
+                # 'A061120',
+                # 'A241120',
+                # 'A271020',
+                # 'B191120',
+                # 'B231020'
+                ]
 
 
-subject_list = ['229', '230', '232', '233', '234',
-                '235', '236', '237', '242', '243',
-                '244', '245', '252', '253', '255',
-                '261', '262', '263', '264', '273',
-                '274', '281', '282', '286', '287',
-                '362', '363', '364', '365', '366',
-                'Agarose']
+
+run_list = ['run-01',
+            'run-02']
 
 
-# subject_list = ['363']
+output_dir =  '{0}/Kevin/resting_state_preproc_func_outputdir'.format(origin_dir)
+working_dir = '{0}/Kevin/resting_state_preproc_func_workingdir'.format(origin_dir)
 
-
-output_dir = '/Volumes/Amr_1TB/resting_state/resting_state_preproc_outputdir'
-working_dir = '/Volumes/Amr_1TB/resting_state/resting_state_preproc_workingdir'
-
-resting_fmri_preproc = Workflow(name='resting_fmri_preproc')
-resting_fmri_preproc.base_dir = opj(experiment_dir, working_dir)
+resting_fmri_preproc_func = Workflow(name='resting_fmri_preproc_func')
+resting_fmri_preproc_func.base_dir = opj(experiment_dir, working_dir)
 
 # =====================================================================================================
 # In[3]:
 # Infosource - a function free node to iterate over the list of subject names
-infosource = Node(IdentityInterface(fields=['subject_id']),
+infosource = Node(IdentityInterface(fields=['subject_id','run_id']),
                   name="infosource")
-infosource.iterables = [('subject_id', subject_list)]
+infosource.iterables = [('subject_id', subject_list),
+                             ('run_id', run_list)]
+
 
 # -----------------------------------------------------------------------------------------------------
 # In[4]:
 
-templates = {
-    'Anat': 'Data/{subject_id}/Anat_Bet_{subject_id}.nii',
-    'Func': 'Data/{subject_id}/rs_fMRI_{subject_id}.nii',
-    'Anat_Mask': 'Data/{subject_id}/Mask_{subject_id}.nii',
-}
+#anatomical images
+templates_anat = {
+'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain.nii.gz'
+             }
 
-selectfiles = Node(SelectFiles(templates,
-                               base_directory=experiment_dir),
-                   name="selectfiles")
+selectfiles_anat = Node(SelectFiles(templates_anat,
+                   base_directory=experiment_dir),
+                   name="selectfiles_anat")
 
+#functional runs
+templates_func = {
+'func': 'raw_data_bids/{subject_id}/func/sub-{subject_id}-X*-rs_bold_{run_id}.nii.gz'
+             }
+
+selectfiles_func = Node(SelectFiles(templates_func,
+                   base_directory=experiment_dir),
+                   name="selectfiles_func")
 # ========================================================================================================
 # In[5]:
 
@@ -89,37 +100,21 @@ datasink.inputs.substitutions = substitutions
 # ========================================================================================================
 # In[6]:
 
-# a new template with 8 iterationsand -thr 5 mask then multiply the original template to remove blurry edges
-template_brain = '/Volumes/Amr_1TB/anat_temp_new/anat_temp_enhanced_3.nii.gz'
-template_mask = '/Volumes/Amr_1TB/anat_temp_new/anat_template_enhanced_mask_2.nii.gz'
-# I replaced the template that was made from rois of different subject b a template created out of 50 vols of subject 230
-epi_brain = '/Volumes/Amr_1TB/resting_state/epi_template/230_template_brain_enhanced.nii.gz'
+#
+template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
+template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
+# custom maded template, see creating_rs_template_00002.sh script
+epi_brain = '{0}/Kevin/rs-temp/epi_temp_snapped.nii.gz'.format(origin_dir)
+epi_mask = '{0}/Kevin/rs-temp/epi_temp_mask.nii.gz'.format(origin_dir)
 
 TR = 2.0
 
 # =======================================================================================================
-# In[7]:
-# erode the anatomical image to remove the outline that remained after ITK-snap
-erode_anat = Node(fsl.ErodeImage(), name='erode_anatomical_image')
-erode_anat.inputs.kernel_shape = 'sphere'  # this does a better erosion
-erode_anat.inputs.kernel_size = 2.5
-
-# =======================================================================================================
-# In[8]:
-
-biasfield_correction_anat = Node(ants.N4BiasFieldCorrection(), name='biasfield_correction_anat')
-biasfield_correction_anat.inputs.dimension = 3
-biasfield_correction_anat.inputs.save_bias = True
-# biasfield_correction_anat.inputs.output_image = 'anat_bet_biasfield_corrected.nii.gz' #better not to,
-# it confuses the Registration
-
-
-# ======================================================================================================
 # In[9]:
-# Extract one fmri image to use fro brain extraction, the same one you will use for mcflirt as reference
+# Extract one fmri image to use for brain extraction, the same one you will use for mcflirt as reference
 roi = Node(fsl.ExtractROI(), name='extract_one_fMRI_volume')
 
-roi.inputs.t_min = 375
+roi.inputs.t_min = 450
 roi.inputs.t_size = 1
 
 # ========================================================================================================
@@ -127,6 +122,8 @@ roi.inputs.t_size = 1
 
 # normalizing the anatomical_bias_corrected image to the common anatomical template
 # Here only we are calculating the paramters, we apply them later.
+# I will not use this function here, I will create a seperate anatomical pipeline
+# I just left it in order not to break the clone
 
 reg_T1_2_temp = Node(ants.Registration(), name='reg_T1_2_temp')
 reg_T1_2_temp.inputs.args = '--float'
@@ -219,84 +216,19 @@ Plot_Motion = Node(name='Plot_Motion',
                                       function=Plot_Motion))
 
 # =======================================================================================================
-# In[10]:
-# remove the skull from the epi images
-# this is a little bit tricky:
-# 1-resample eroded_anat to roi
-# 2-apply coreg inverse transformations to get the anat to the space of func
-# 3-mask the anat_2_func that is now resmapled to epi
-# 4-use this mask to bet the epi
 
-# I also created an epi_mask, removed the skull manually
-# I then tried antsRegistration(Not antsBrainExtraction) the results were pretty good
-# compared to this method, the registration to epi_template is much more satisfactory
-
-
-# the epi_template method is as follow:
-# 1- register the roi volume to epi_mask that is skull stripped
-# 2- binarize the InverseWarped image using -thr 2
-# 3- uses this mask to extract brain
-
-# def create_roi_mask(roi, anat, anat_2_func_trans):
-#         from nilearn import image
-#         import nipype.interfaces.fsl as fsl
-#         import nipype.interfaces.ants as ants
-#         import os
-
-#         resampled_anat = image.resample_to_img(source_img=anat, target_img=roi)
-#         resampled_anat.to_filename('resampled_anat.nii.gz')
-#         new_anat = os.path.abspath('resampled_anat.nii.gz')
-
-
-#         anat_2_func = ants.ApplyTransforms()
-#         anat_2_func.inputs.dimension = 3
-#         anat_2_func.inputs.input_image = new_anat
-#         anat_2_func.inputs.reference_image = roi
-#         anat_2_func.inputs.transforms = anat_2_func_trans
-
-#         anat_2_func.inputs.input_image_type = 3
-#         anat_2_func.inputs.num_threads = 1
-#         anat_2_func.inputs.float = True
-#         print(anat_2_func.cmdline)
-
-#         output = anat_2_func.run()
-#         out_anat_2_func = output.outputs.output_image
-
-
-#         mask_resampled = fsl.ImageMaths()
-#         mask_resampled.inputs.op_string = '-thr 1 -bin'
-#         mask_resampled.inputs.in_file = out_anat_2_func
-#         output = mask_resampled.run()
-#         bold_mask = output.outputs.out_file
-#         # bold_mask.to_filename('bold_mask.nii.gz'
-#         # bold_mask = os.path.abspath('bold_mask.nii.gz')
-
-
-#         return bold_mask
-
-# create_roi_mask = Node(Function(input_names = ['roi', 'anat', 'anat_2_func_trans'],
-#                         output_names = ['bold_mask'],
-#                         function = create_roi_mask),
-#                         name = 'create_roi_mask')
-
-roi_2_epi_temp = reg_T1_2_temp.clone(name='roi_2_epi_temp')
-roi_2_epi_temp.inputs.moving_image = epi_brain
-roi_2_epi_temp.inputs.convergence_threshold = [1e-012]
-roi_2_epi_temp.inputs.transforms = ['Rigid']
-roi_2_epi_temp.inputs.metric = ['GC']
-
-create_roi_mask = Node(fsl.ImageMaths(), 'create_roi_mask')
-create_roi_mask.inputs.op_string = '-bin'
-
+#Remove skull using antsBrainExtraction.sh, i am using the epi study-based template that I build and remove
+#the skull manually using ITKsnap
+brain_extraction_roi = Node(ants.BrainExtraction(), name='brain_extraction_roi')
+brain_extraction_roi.inputs.dimension = 3
+brain_extraction_roi.inputs.brain_template = epi_brain
+brain_extraction_roi.inputs.brain_probability_mask = epi_mask
+brain_extraction_roi.inputs.num_threads = 4
 
 # =======================================================================================================
-# In[11]:
 
-brain_extraction_roi = Node(fsl.ApplyMask(), name='brain_extraction_roi')
-# ======================================================================================================
-# In[12]:
-
-brain_extraction_bold = Node(fsl.ApplyMask(), name='brain_extraction_bold')
+# apply the mask from brain_extraction_roi to all 4D
+brain_extraction_4D = Node(fsl.ApplyMask(), name='brain_extraction_4D')
 
 # ========================================================================================================
 # In[17]:
@@ -310,21 +242,13 @@ func_2_template.inputs.input_image_type = 3
 func_2_template.inputs.num_threads = 1
 func_2_template.inputs.float = True
 
-
-# ========================================================================================================
-# In[18]:
-# obsolete
-smoothing = Node(fsl.Smooth(), name='smoothing')
-smoothing.iterables = ('fwhm', [4, 5, 5.75, 6.25])
-
-
 # ========================================================================================================
 # 2D smoothing
 smoothing_2d = Node(afni.Merge(), name='smoothing_2d')
 smoothing_2d.inputs.out_file = 'afni_2d_smoothed.nii.gz'
 smoothing_2d.inputs.doall = True
-smoothing_2d.iterables = ('blurfwhm_bx_by_bz', [[0, 0, 0], [3, 3, 0], [4, 4, 0], [5, 5, 0]])
-
+smoothing_2d.iterables = ('blurfwhm_bx_by_bz', [[0, 0, 0], [6.5, 6.5, 6.5], [8, 8, 8],
+                                                [6.5, 6.5, 0], [10, 10, 10], [10, 10, 0]])
 
 # ========================================================================================================
 # In[18]:
@@ -393,54 +317,35 @@ melodic.iterables = ('dim', [15, 20, 25])
 # In[24]:
 
 
-resting_fmri_preproc.connect([
+resting_fmri_preproc_func.connect([
 
 
-    (infosource, selectfiles, [('subject_id', 'subject_id')]),
-    (selectfiles, biasfield_correction_anat, [('Anat', 'input_image')]),
+    (infosource, selectfiles_anat,[('subject_id','subject_id')]),
+    (infosource, selectfiles_func, [('subject_id','subject_id'),
+                                    ('run_id','run_id')]),
 
-    (biasfield_correction_anat, erode_anat, [('output_image', 'in_file')]),
+    (selectfiles_func, roi, [('func', 'in_file')]),
 
-
-    (erode_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
-
-
-    (selectfiles, roi, [('Func', 'in_file')]),
-
-
-    (selectfiles, McFlirt, [('Func', 'in_file')]),
+    (selectfiles_func, McFlirt, [('func', 'in_file')]),
     (roi, McFlirt, [('roi_file', 'ref_file')]),
-
+    #
     (McFlirt, Plot_Motion, [('par_file', 'motion_par'),
                             ('rms_files', 'rms_files')]),
 
-    (roi, coreg, [('roi_file', 'moving_image')]),
-    (erode_anat, coreg, [('out_file', 'fixed_image')]),
+    (roi, brain_extraction_roi, [('roi_file','anatomical_image')]),
+    #
+    (brain_extraction_roi, coreg, [('BrainExtractionBrain', 'moving_image')]),
+    (selectfiles_anat, coreg, [('anat', 'fixed_image')]),
+
+    (McFlirt, brain_extraction_4D, [('out_file','in_file')]),
+    (brain_extraction_roi, brain_extraction_4D, [('BrainExtractionMask','mask_file')]),
 
 
-    (roi, roi_2_epi_temp, [('roi_file', 'fixed_image')]),
-
-    (roi_2_epi_temp, create_roi_mask, [('warped_image', 'in_file')]),
-
-
-
-    (roi, brain_extraction_roi, [('roi_file', 'in_file')]),
-    (create_roi_mask, brain_extraction_roi, [('out_file', 'mask_file')]),
-
-
-
-    (create_roi_mask, brain_extraction_bold, [('out_file', 'mask_file')]),
-    (McFlirt, brain_extraction_bold, [('out_file', 'in_file')]),
-
-
-
-
-
-    (brain_extraction_bold, smoothing_2d, [('out_file', 'in_files')]),
-
-
-    (brain_extraction_bold, Median_Intensity, [('out_file', 'in_file')]),
-    (create_roi_mask, Median_Intensity, [('out_file', 'mask_file')]),
+    (brain_extraction_4D, smoothing_2d, [('out_file', 'in_files')]),
+    #
+    #
+    (brain_extraction_4D, Median_Intensity, [('out_file', 'in_file')]),
+    (brain_extraction_roi, Median_Intensity, [('BrainExtractionMask', 'mask_file')]),
 
     (Median_Intensity, Scale_Median_Intensity, [('out_stat', 'median_intensity')]),
 
@@ -456,23 +361,23 @@ resting_fmri_preproc.connect([
 
     (Add_Mean_Image, melodic, [('out_file', 'in_files')]),
 
-    # ======================================datasink============================================
-    (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
-    # does not work for this particular node
-    (coreg, datasink, [('composite_transform', 'func_2_anat_transformations')]),
-
-    (brain_extraction_roi, datasink, [('out_file', 'bold_brain')]),
-
-
-    (erode_anat, datasink, [('out_file', 'anat_brain')]),
-    (reg_T1_2_temp, datasink, [('composite_transform', 'anat_2_temp_transformations'),
-                               ('warped_image', 'anat_2_temp_image')]),
-
-    (melodic, datasink, [('out_dir', 'melodic')])
+    # # ======================================datasink============================================
+    # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
+    # # does not work for this particular node
+    # (coreg, datasink, [('composite_transform', 'func_2_anat_transformations')]),
+    #
+    # (brain_extraction_roi, datasink, [('out_file', 'bold_brain')]),
+    #
+    #
+    # (erode_anat, datasink, [('out_file', 'anat_brain')]),
+    # (reg_T1_2_temp, datasink, [('composite_transform', 'anat_2_temp_transformations'),
+    #                            ('warped_image', 'anat_2_temp_image')]),
+    #
+    # (melodic, datasink, [('out_dir', 'melodic')])
 
 ])
 
-resting_fmri_preproc.write_graph(graph2use='colored', format='png', simple_form=True)
+resting_fmri_preproc_func.write_graph(graph2use='colored', format='png', simple_form=True)
 
-# resting_fmri_preproc.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
-resting_fmri_preproc.run('MultiProc', plugin_args={'n_procs': 16})
+# resting_fmri_preproc_func.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
+resting_fmri_preproc_func.run('MultiProc', plugin_args={'n_procs': 8})
