@@ -67,7 +67,7 @@ infosource.iterables = [('subject_id', subject_list),
 
 #anatomical images
 templates_anat = {
-'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_func_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain'
+'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain.nii.gz'
              }
 
 selectfiles_anat = Node(SelectFiles(templates_anat,
