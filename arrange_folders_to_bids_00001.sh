@@ -3,7 +3,7 @@
 # subject B191120, the prestimulation run is divided into three runs, 300 vol each
 # so we merge them
 
-cd /media/amr/Amr_4TB/Work/Kevin/Kevin_rs_fMRI_raw_data/B191120
+cd /home/in/aeed/Work/Kevin/Kevin_rs_fMRI_raw_data/B191120
 # delete in case it exists
 imrm EPIGEAx_Isot05mmX5P1*
 
@@ -17,7 +17,7 @@ gzip -d EPIGEAx_Isot05mmX5P1.nii.gz
 
 # arrange the raw data folders to match the bids format:
 
-cd /media/amr/Amr_4TB/Work/Kevin
+cd /home/in/aeed/Work/Kevin
 mkdir raw_data_bids
 
 # A251120/

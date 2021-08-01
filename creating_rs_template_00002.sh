@@ -4,13 +4,13 @@
 # I did not create one for antamoical images, since the result was not very good, also BET works well
 
 
-mkdir /Volumes/Amr_1TB/Kevin/rs-temp
+mkdir /home/in/aeed/Kevin/rs-temp
 
 imcp \
-/Volumes/Amr_1TB/Kevin/raw_data_bids/A031120/func/sub-A031120_X8_bold.nii.gz \
-/Volumes/Amr_1TB/Kevin/rs-temp/
+/home/in/aeed/Kevin/raw_data_bids/A031120/func/sub-A031120_X8_bold.nii.gz \
+/home/in/aeed/Kevin/rs-temp/
 
-cd /Volumes/Amr_1TB/Kevin/rs-temp
+cd /home/in/aeed/Kevin/rs-temp
 # use only 50 volumes out of 900
 fslroi sub-A031120_X8_bold.nii.gz  sub 450 50
 imrm sub-A031120_X8_bold.nii.gz
