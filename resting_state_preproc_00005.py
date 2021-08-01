@@ -3,6 +3,7 @@
 import re
 import os
 import sys
+import glob
 from nipype.interfaces.matlab import MatlabCommand
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,22 +28,23 @@ experiment_dir = '{0}/Kevin/'.format(origin_dir)
 
 subject_list = ['A021120',
                 'A051120',
-                'A231120',
-                'A251120',
-                'A301020',
-                'B201120',
-                'B261020',
-                'A031120',
-                'A061120',
-                'A241120',
-                'A271020',
-                'B191120',
-                'B231020']
+                # 'A231120',
+                # 'A251120',
+                # 'A301020',
+                # 'B201120',
+                # 'B261020',
+                # 'A031120',
+                # 'A061120',
+                # 'A241120',
+                # 'A271020',
+                # 'B191120',
+                # 'B231020'
+                ]
 
 
 
-run_list = ['run-01',
-            'run-02']
+run_list = ['run1',
+            'run2']
 
 
 output_dir =  '{0}/Kevin/resting_state_preproc_outputdir'.format(origin_dir)
@@ -54,9 +56,9 @@ resting_fmri_preproc.base_dir = opj(experiment_dir, working_dir)
 # =====================================================================================================
 # In[3]:
 # Infosource - a function free node to iterate over the list of subject names
-infosource_func = Node(IdentityInterface(fields=['subject_id','run_id']),
-                  name="infosource_func")
-infosource_func.iterables = [('subject_id', subject_list),
+infosource = Node(IdentityInterface(fields=['subject_id','run_id']),
+                  name="infosource")
+infosource.iterables = [('subject_id', subject_list),
                              ('run_id', run_list)]
 
 
@@ -124,7 +126,7 @@ brain_extraction_anat.inputs.frac = 0.5
 
 # ======================================================================================================
 # In[9]:
-# Extract one fmri image to use fro brain extraction, the same one you will use for mcflirt as reference
+# Extract one fmri image to use for brain extraction, the same one you will use for mcflirt as reference
 roi = Node(fsl.ExtractROI(), name='extract_one_fMRI_volume')
 
 roi.inputs.t_min = 450
@@ -135,6 +137,8 @@ roi.inputs.t_size = 1
 
 # normalizing the anatomical_bias_corrected image to the common anatomical template
 # Here only we are calculating the paramters, we apply them later.
+# I will not use this function here, I will create a seperate anatomical pipeline
+# I just left it in order not to break the clone
 
 reg_T1_2_temp = Node(ants.Registration(), name='reg_T1_2_temp')
 reg_T1_2_temp.inputs.args = '--float'
@@ -325,79 +329,82 @@ melodic.iterables = ('dim', [15, 20, 25])
 resting_fmri_preproc.connect([
 
 
-    (infosource, selectfiles, [('subject_id', 'subject_id')]),
-    (selectfiles, biasfield_correction_anat, [('Anat', 'input_image')]),
+    (infosource, selectfiles_anat,[('subject_id','subject_id')]),
+    (infosource, selectfiles_func, [('subject_id','subject_id'),
+                                    ('run_id','run_id')]),
 
-    (biasfield_correction_anat, erode_anat, [('output_image', 'in_file')]),
+    (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')]),
+    (selectfiles_func, roi, [('func', 'in_file')]),
 
-
-    (erode_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
-
-
-    (selectfiles, roi, [('Func', 'in_file')]),
-
-
-    (selectfiles, McFlirt, [('Func', 'in_file')]),
-    (roi, McFlirt, [('roi_file', 'ref_file')]),
-
-    (McFlirt, Plot_Motion, [('par_file', 'motion_par'),
-                            ('rms_files', 'rms_files')]),
-
-    (roi, coreg, [('roi_file', 'moving_image')]),
-    (erode_anat, coreg, [('out_file', 'fixed_image')]),
-
-
-    (roi, roi_2_epi_temp, [('roi_file', 'fixed_image')]),
-
-    (roi_2_epi_temp, create_roi_mask, [('warped_image', 'in_file')]),
-
-
-
-    (roi, brain_extraction_roi, [('roi_file', 'in_file')]),
-    (create_roi_mask, brain_extraction_roi, [('out_file', 'mask_file')]),
-
-
-
-    (create_roi_mask, brain_extraction_bold, [('out_file', 'mask_file')]),
-    (McFlirt, brain_extraction_bold, [('out_file', 'in_file')]),
-
-
-
-
-
-    (brain_extraction_bold, smoothing_2d, [('out_file', 'in_files')]),
-
-
-    (brain_extraction_bold, Median_Intensity, [('out_file', 'in_file')]),
-    (create_roi_mask, Median_Intensity, [('out_file', 'mask_file')]),
-
-    (Median_Intensity, Scale_Median_Intensity, [('out_stat', 'median_intensity')]),
-
-    (Scale_Median_Intensity, Intensity_Normalization, [('scaling', 'operand_value')]),
-    (smoothing_2d, Intensity_Normalization, [('out_file', 'in_file')]),
-
-
-    (Intensity_Normalization, Get_Mean_Image, [('out_file', 'in_file')]),
-    (Intensity_Normalization, high_pass_filter, [('out_file', 'in_file')]),
-
-    (high_pass_filter, Add_Mean_Image, [('out_file', 'in_file')]),
-    (Get_Mean_Image, Add_Mean_Image, [('out_file', 'operand_file')]),
-
-    (Add_Mean_Image, melodic, [('out_file', 'in_files')]),
-
-    # ======================================datasink============================================
-    (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
-    # does not work for this particular node
-    (coreg, datasink, [('composite_transform', 'func_2_anat_transformations')]),
-
-    (brain_extraction_roi, datasink, [('out_file', 'bold_brain')]),
-
-
-    (erode_anat, datasink, [('out_file', 'anat_brain')]),
-    (reg_T1_2_temp, datasink, [('composite_transform', 'anat_2_temp_transformations'),
-                               ('warped_image', 'anat_2_temp_image')]),
-
-    (melodic, datasink, [('out_dir', 'melodic')])
+    # (biasfield_correction_anat, erode_anat, [('output_image', 'in_file')]),
+    #
+    #
+    # (erode_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
+    #
+    #
+    #
+    #
+    # (selectfiles, McFlirt, [('Func', 'in_file')]),
+    # (roi, McFlirt, [('roi_file', 'ref_file')]),
+    #
+    # (McFlirt, Plot_Motion, [('par_file', 'motion_par'),
+    #                         ('rms_files', 'rms_files')]),
+    #
+    # (roi, coreg, [('roi_file', 'moving_image')]),
+    # (erode_anat, coreg, [('out_file', 'fixed_image')]),
+    #
+    #
+    # (roi, roi_2_epi_temp, [('roi_file', 'fixed_image')]),
+    #
+    # (roi_2_epi_temp, create_roi_mask, [('warped_image', 'in_file')]),
+    #
+    #
+    #
+    # (roi, brain_extraction_roi, [('roi_file', 'in_file')]),
+    # (create_roi_mask, brain_extraction_roi, [('out_file', 'mask_file')]),
+    #
+    #
+    #
+    # (create_roi_mask, brain_extraction_bold, [('out_file', 'mask_file')]),
+    # (McFlirt, brain_extraction_bold, [('out_file', 'in_file')]),
+    #
+    #
+    #
+    #
+    #
+    # (brain_extraction_bold, smoothing_2d, [('out_file', 'in_files')]),
+    #
+    #
+    # (brain_extraction_bold, Median_Intensity, [('out_file', 'in_file')]),
+    # (create_roi_mask, Median_Intensity, [('out_file', 'mask_file')]),
+    #
+    # (Median_Intensity, Scale_Median_Intensity, [('out_stat', 'median_intensity')]),
+    #
+    # (Scale_Median_Intensity, Intensity_Normalization, [('scaling', 'operand_value')]),
+    # (smoothing_2d, Intensity_Normalization, [('out_file', 'in_file')]),
+    #
+    #
+    # (Intensity_Normalization, Get_Mean_Image, [('out_file', 'in_file')]),
+    # (Intensity_Normalization, high_pass_filter, [('out_file', 'in_file')]),
+    #
+    # (high_pass_filter, Add_Mean_Image, [('out_file', 'in_file')]),
+    # (Get_Mean_Image, Add_Mean_Image, [('out_file', 'operand_file')]),
+    #
+    # (Add_Mean_Image, melodic, [('out_file', 'in_files')]),
+    #
+    # # ======================================datasink============================================
+    # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
+    # # does not work for this particular node
+    # (coreg, datasink, [('composite_transform', 'func_2_anat_transformations')]),
+    #
+    # (brain_extraction_roi, datasink, [('out_file', 'bold_brain')]),
+    #
+    #
+    # (erode_anat, datasink, [('out_file', 'anat_brain')]),
+    # (reg_T1_2_temp, datasink, [('composite_transform', 'anat_2_temp_transformations'),
+    #                            ('warped_image', 'anat_2_temp_image')]),
+    #
+    # (melodic, datasink, [('out_dir', 'melodic')])
 
 ])
 
