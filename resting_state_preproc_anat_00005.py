@@ -90,8 +90,8 @@ datasink.inputs.substitutions = substitutions
 # In[6]:
 
 #
-template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
-template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
+template_brain = '{0}/Kevin/std_original.nii'.format(origin_dir)
+template_mask = '{0}/Kevin/std_original_mask.nii'.format(origin_dir)
 
 # =======================================================================================================
 # In[8]:
@@ -122,7 +122,7 @@ reg_T1_2_temp.inputs.args = '--float'
 reg_T1_2_temp.inputs.collapse_output_transforms = True
 reg_T1_2_temp.inputs.fixed_image = template_brain
 reg_T1_2_temp.inputs.initial_moving_transform_com = True
-reg_T1_2_temp.inputs.num_threads = 4
+reg_T1_2_temp.inputs.num_threads = 8
 reg_T1_2_temp.inputs.output_inverse_warped_image = True
 reg_T1_2_temp.inputs.output_warped_image = True
 reg_T1_2_temp.inputs.sigma_units = ['vox']*3
@@ -161,8 +161,8 @@ resting_fmri_preproc_anat.connect([
 
     (infosource, selectfiles_anat,[('subject_id','subject_id')]),
 
-    (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')])
-    (erode_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
+    (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')]),
+    (biasfield_correction_anat, reg_T1_2_temp, [('output_image', 'moving_image')]),
     # # ======================================datasink============================================
     # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
     # # does not work for this particular node
