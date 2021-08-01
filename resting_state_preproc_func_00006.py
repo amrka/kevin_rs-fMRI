@@ -67,8 +67,7 @@ infosource.iterables = [('subject_id', subject_list),
 
 #anatomical images
 templates_anat = {
-'anat': '{0}/Kevin/resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/\
-_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain'.format(origin_dir)
+'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain'
              }
 
 selectfiles_anat = Node(SelectFiles(templates_anat,
@@ -111,21 +110,6 @@ epi_mask = '{0}/Kevin/rs-temp/epi_temp_mask.nii.gz'.format(origin_dir)
 TR = 2.0
 
 # =======================================================================================================
-# In[8]:
-
-biasfield_correction_anat = Node(ants.N4BiasFieldCorrection(), name='biasfield_correction_anat')
-biasfield_correction_anat.inputs.dimension = 3
-biasfield_correction_anat.inputs.save_bias = True
-# biasfield_correction_anat.inputs.output_image = 'anat_bet_biasfield_corrected.nii.gz' #better not to,
-# it confuses the Registration
-# =======================================================================================================
-# In[8]:
-
-brain_extraction_anat = Node(fsl.BET(), name='brain_extraction_anat')
-brain_extraction_anat.inputs.mask = True
-brain_extraction_anat.inputs.frac = 0.5
-
-# ======================================================================================================
 # In[9]:
 # Extract one fmri image to use for brain extraction, the same one you will use for mcflirt as reference
 roi = Node(fsl.ExtractROI(), name='extract_one_fMRI_volume')
@@ -235,11 +219,16 @@ Plot_Motion = Node(name='Plot_Motion',
 
 #Remove skull using antsBrainExtraction.sh, i am using the epi study-based template that I build and remove
 #the skull manually using ITKsnap
-brain_extraction_func = Node(ants.BrainExtraction(), name='brain_extraction_func')
-brain_extraction_func.inputs.dimension = 3
-brain_extraction_func.inputs.brain_template = epi_brain
-brain_extraction_func.inputs.brain_probability_mask = epi_mask
-brain_extraction_func.inputs.num_threads = 4
+brain_extraction_roi = Node(ants.BrainExtraction(), name='brain_extraction_roi')
+brain_extraction_roi.inputs.dimension = 3
+brain_extraction_roi.inputs.brain_template = epi_brain
+brain_extraction_roi.inputs.brain_probability_mask = epi_mask
+brain_extraction_roi.inputs.num_threads = 4
+
+# =======================================================================================================
+
+# apply the mask from brain_extraction_roi to all 4D
+brain_extraction_4D = Node(fsl.ApplyMask(), name='brain_extraction_4D')
 
 # ========================================================================================================
 # In[17]:
@@ -334,65 +323,43 @@ resting_fmri_preproc.connect([
     (infosource, selectfiles_func, [('subject_id','subject_id'),
                                     ('run_id','run_id')]),
 
-    (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')]),
     (selectfiles_func, roi, [('func', 'in_file')]),
 
-    # (biasfield_correction_anat, erode_anat, [('output_image', 'in_file')]),
-    #
-    #
-    # (erode_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
-    #
-    #
-    #
-    #
-    (selectfiles, McFlirt, [('Func', 'in_file')]),
+    (selectfiles_func, McFlirt, [('Func', 'in_file')]),
     (roi, McFlirt, [('roi_file', 'ref_file')]),
     #
     (McFlirt, Plot_Motion, [('par_file', 'motion_par'),
                             ('rms_files', 'rms_files')]),
+
+    (roi, brain_extraction_roi, [('roi_file','anatomical_image')]),
     #
-    (roi, coreg, [('roi_file', 'moving_image')]),
-    (erode_anat, coreg, [('out_file', 'fixed_image')]),
-    #
-    #
-    # (roi, roi_2_epi_temp, [('roi_file', 'fixed_image')]),
-    #
-    # (roi_2_epi_temp, create_roi_mask, [('warped_image', 'in_file')]),
-    #
-    #
-    #
-    # (roi, brain_extraction_roi, [('roi_file', 'in_file')]),
-    # (create_roi_mask, brain_extraction_roi, [('out_file', 'mask_file')]),
+    (brain_extraction_roi, coreg, [('BrainExtractionBrain', 'moving_image')]),
+    (selectfiles_anat, coreg, [('anat', 'fixed_image')]),
+
+    (McFlirt, brain_extraction_4D, [('out_file','in_file')]),
+    (brain_extraction_roi, brain_extraction_4D, [('BrainExtractionMask','mask_file')]),
+
+
+    (brain_extraction_4D, smoothing_2d, [('out_file', 'in_files')]),
     #
     #
-    #
-    # (create_roi_mask, brain_extraction_bold, [('out_file', 'mask_file')]),
-    # (McFlirt, brain_extraction_bold, [('out_file', 'in_file')]),
-    #
-    #
-    #
-    #
-    #
-    # (brain_extraction_bold, smoothing_2d, [('out_file', 'in_files')]),
-    #
-    #
-    # (brain_extraction_bold, Median_Intensity, [('out_file', 'in_file')]),
-    # (create_roi_mask, Median_Intensity, [('out_file', 'mask_file')]),
-    #
-    # (Median_Intensity, Scale_Median_Intensity, [('out_stat', 'median_intensity')]),
-    #
-    # (Scale_Median_Intensity, Intensity_Normalization, [('scaling', 'operand_value')]),
-    # (smoothing_2d, Intensity_Normalization, [('out_file', 'in_file')]),
-    #
-    #
-    # (Intensity_Normalization, Get_Mean_Image, [('out_file', 'in_file')]),
-    # (Intensity_Normalization, high_pass_filter, [('out_file', 'in_file')]),
-    #
-    # (high_pass_filter, Add_Mean_Image, [('out_file', 'in_file')]),
-    # (Get_Mean_Image, Add_Mean_Image, [('out_file', 'operand_file')]),
-    #
-    # (Add_Mean_Image, melodic, [('out_file', 'in_files')]),
-    #
+    (brain_extraction_4D, Median_Intensity, [('out_file', 'in_file')]),
+    (brain_extraction_roi, Median_Intensity, [('BrainExtractionMask', 'mask_file')]),
+
+    (Median_Intensity, Scale_Median_Intensity, [('out_stat', 'median_intensity')]),
+
+    (Scale_Median_Intensity, Intensity_Normalization, [('scaling', 'operand_value')]),
+    (smoothing_2d, Intensity_Normalization, [('out_file', 'in_file')]),
+
+
+    (Intensity_Normalization, Get_Mean_Image, [('out_file', 'in_file')]),
+    (Intensity_Normalization, high_pass_filter, [('out_file', 'in_file')]),
+
+    (high_pass_filter, Add_Mean_Image, [('out_file', 'in_file')]),
+    (Get_Mean_Image, Add_Mean_Image, [('out_file', 'operand_file')]),
+
+    (Add_Mean_Image, melodic, [('out_file', 'in_files')]),
+
     # # ======================================datasink============================================
     # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
     # # does not work for this particular node
