@@ -163,9 +163,9 @@ flirt_aff_T1_2_temp = Node(fsl.FLIRT(), name='flirt_aff_T1_2_temp')
 flirt_aff_T1_2_temp.inputs.reference = template_brain
 flirt_aff_T1_2_temp.inputs.cost = 'corratio'
 flirt_aff_T1_2_temp.inputs.bins = 256
-flirt_aff_T1_2_temp.inputs.searchr_x = [-90, 90]
-flirt_aff_T1_2_temp.inputs.searchr_y = [-90, 90]
-flirt_aff_T1_2_temp.inputs.searchr_z = [-90, 90]
+flirt_aff_T1_2_temp.inputs.searchr_x = [-180, 180]
+flirt_aff_T1_2_temp.inputs.searchr_y = [-180, 180]
+flirt_aff_T1_2_temp.inputs.searchr_z = [-180, 180]
 flirt_aff_T1_2_temp.inputs.dof = 12
 flirt_aff_T1_2_temp.inputs.interp = 'trilinear'
 
