@@ -152,9 +152,20 @@ reg_T1_2_temp.inputs.output_warped_image = True
 reg_T1_2_temp.inputs.float = True
 
 # ========================================================================================================
-# In[24]:
+# Using affine reg with FLIRT in parallel, NOT IN PLACE OF antsREgistration (previsou command)
+# so I can compare the output
+# the performance of FLIRT affine is better than antsRegistration affine
+flirt_aff_T1_2_temp = Node(fsl.FLIRT(), name='flirt_aff_T1_2_temp')
+flirt_aff_T1_2_temp.inputs.reference = template_brain
+flirt_aff_T1_2_temp.inputs.cost = 'corratio'
+flirt_aff_T1_2_temp.inputs.bins = 256
+flirt_aff_T1_2_temp.inputs.searchr_x = [-90, 90]
+flirt_aff_T1_2_temp.inputs.searchr_y = [-90, 90]
+flirt_aff_T1_2_temp.inputs.searchr_z = [-90, 90]
+flirt_aff_T1_2_temp.inputs.dof = 12
+flirt_aff_T1_2_temp.inputs.interp = 'trilinear'
 
-
+# ========================================================================================================
 resting_fmri_preproc_anat.connect([
 
 
@@ -163,6 +174,8 @@ resting_fmri_preproc_anat.connect([
     (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')]),
     (biasfield_correction_anat, brain_extraction_anat, [('output_image', 'in_file')]),
     (brain_extraction_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
+
+    (brain_extraction_anat, flirt_aff_T1_2_temp, [('out_file', 'in_file')]),
     # # ======================================datasink============================================
     # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
     # # does not work for this particular node
