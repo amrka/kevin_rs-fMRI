@@ -27,27 +27,26 @@ origin_dir = sys.argv[1]
 experiment_dir = '{0}/Kevin/'.format(origin_dir)
 
 subject_list = ['A021120',
-                'A051120',
-                'A231120',
-                'A251120',
-                'A301020',
-                'B201120',
-                'B261020',
-                'A031120',
-                'A061120',
-                'A241120',
-                'A271020',
-                'B191120',
-                'B231020'
+                # 'A051120',
+                # 'A231120',
+                # 'A251120',
+                # 'A301020',
+                # 'B201120',
+                # 'B261020',
+                # 'A031120',
+                # 'A061120',
+                # 'A241120',
+                # 'A271020',
+                # 'B191120',
+                # 'B231020'
                 ]
-
 
 
 run_list = ['run-01',
             'run-02']
 
 
-output_dir =  '{0}/Kevin/resting_state_preproc_anat_outputdir'.format(origin_dir)
+output_dir = '{0}/Kevin/resting_state_preproc_anat_outputdir'.format(origin_dir)
 working_dir = '{0}/Kevin/resting_state_preproc_anat_workingdir'.format(origin_dir)
 
 resting_fmri_preproc_anat = Workflow(name='resting_fmri_preproc_anat')
@@ -64,14 +63,14 @@ infosource.iterables = [('subject_id', subject_list)]
 # -----------------------------------------------------------------------------------------------------
 # In[4]:
 
-#anatomical images
+# anatomical images
 templates_anat = {
-             'anat'     : 'raw_data_bids/{subject_id}/anat/sub-{subject_id}_X*_T2w.nii.gz'
-             }
+    'anat': 'raw_data_bids/{subject_id}/anat/sub-{subject_id}_X*_T2w.nii.gz'
+}
 
 selectfiles_anat = Node(SelectFiles(templates_anat,
-                   base_directory=experiment_dir),
-                   name="selectfiles_anat")
+                                    base_directory=experiment_dir),
+                        name="selectfiles_anat")
 # ========================================================================================================
 # In[5]:
 
@@ -159,11 +158,11 @@ reg_T1_2_temp.inputs.float = True
 resting_fmri_preproc_anat.connect([
 
 
-    (infosource, selectfiles_anat,[('subject_id','subject_id')]),
+    (infosource, selectfiles_anat, [('subject_id', 'subject_id')]),
 
     (selectfiles_anat, biasfield_correction_anat, [('anat', 'input_image')]),
-    (biasfield_correction_anat, brain_extraction_anat, [('output_image','in_file')]),
-    # (brain_extraction_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
+    (biasfield_correction_anat, brain_extraction_anat, [('output_image', 'in_file')]),
+    (brain_extraction_anat, reg_T1_2_temp, [('out_file', 'moving_image')]),
     # # ======================================datasink============================================
     # (Add_Mean_Image, datasink, [('out_file', 'preproc_img')]),
     # # does not work for this particular node
@@ -182,5 +181,6 @@ resting_fmri_preproc_anat.connect([
 
 resting_fmri_preproc_anat.write_graph(graph2use='colored', format='png', simple_form=True)
 
-resting_fmri_preproc_anat.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
-# resting_fmri_preproc_anat.run('MultiProc', plugin_args={'n_procs': 8})
+# resting_fmri_preproc_anat.run(plugin='SLURM', plugin_args={
+#                               'dont_resubmit_completed_jobs': True, 'max_jobs': 50})
+resting_fmri_preproc_anat.run('MultiProc', plugin_args={'n_procs': 8})
