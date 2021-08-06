@@ -4,6 +4,7 @@ import re
 import os
 import sys
 import glob
+import distro
 from nipype.interfaces.matlab import MatlabCommand
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,6 +24,9 @@ config.update_config(cfg)
 # instead of having to change the script between different copmuters and os
 # we pass the directory with the name from the bash
 origin_dir = sys.argv[1]
+
+# we get the name of the operating sytem to determine how to run ('MultiProc' or 'SLURM')
+os_name = distro.name()
 
 experiment_dir = '{0}/Kevin/'.format(origin_dir)
 
@@ -194,6 +198,15 @@ resting_fmri_preproc_anat.connect([
 
 resting_fmri_preproc_anat.write_graph(graph2use='colored', format='png', simple_form=True)
 
-# resting_fmri_preproc_anat.run(plugin='SLURM', plugin_args={
-#                               'dont_resubmit_completed_jobs': True, 'max_jobs': 50})
-resting_fmri_preproc_anat.run('MultiProc', plugin_args={'n_procs': 8})
+# for the cluster
+if os_name == 'CentOS Linux':
+    resting_fmri_preproc_anat.run(plugin='SLURM', plugin_args={
+                                  'dont_resubmit_completed_jobs': True, 'max_jobs': 50})
+
+# for my laptop
+elif os_name == 'Ubuntu':
+    resting_fmri_preproc_anat.run('MultiProc', plugin_args={'n_procs': 8})
+
+# for the iMac
+elif os_name == 'Darwin':
+    resting_fmri_preproc_anat.run('MultiProc', plugin_args={'n_procs': 8})

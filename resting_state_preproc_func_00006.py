@@ -24,6 +24,9 @@ config.update_config(cfg)
 # we pass the directory with the name from the bash
 origin_dir = sys.argv[1]
 
+# we get the name of the operating sytem to determine how to run ('MultiProc' or 'SLURM')
+os_name = distro.name()
+
 experiment_dir = '{0}/Kevin/'.format(origin_dir)
 
 subject_list = ['A021120',
@@ -42,12 +45,11 @@ subject_list = ['A021120',
                 ]
 
 
-
 run_list = ['run-01',
             'run-02']
 
 
-output_dir =  '{0}/Kevin/resting_state_preproc_func_outputdir'.format(origin_dir)
+output_dir = '{0}/Kevin/resting_state_preproc_func_outputdir'.format(origin_dir)
 working_dir = '{0}/Kevin/resting_state_preproc_func_workingdir'.format(origin_dir)
 
 resting_fmri_preproc_func = Workflow(name='resting_fmri_preproc_func')
@@ -56,32 +58,32 @@ resting_fmri_preproc_func.base_dir = opj(experiment_dir, working_dir)
 # =====================================================================================================
 # In[3]:
 # Infosource - a function free node to iterate over the list of subject names
-infosource = Node(IdentityInterface(fields=['subject_id','run_id']),
+infosource = Node(IdentityInterface(fields=['subject_id', 'run_id']),
                   name="infosource")
 infosource.iterables = [('subject_id', subject_list),
-                             ('run_id', run_list)]
+                        ('run_id', run_list)]
 
 
 # -----------------------------------------------------------------------------------------------------
 # In[4]:
 
-#anatomical images
+# anatomical images
 templates_anat = {
-'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain.nii.gz'
-             }
+    'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain.nii.gz'
+}
 
 selectfiles_anat = Node(SelectFiles(templates_anat,
-                   base_directory=experiment_dir),
-                   name="selectfiles_anat")
+                                    base_directory=experiment_dir),
+                        name="selectfiles_anat")
 
-#functional runs
+# functional runs
 templates_func = {
-'func': 'raw_data_bids/{subject_id}/func/sub-{subject_id}-X*-rs_bold_{run_id}.nii.gz'
-             }
+    'func': 'raw_data_bids/{subject_id}/func/sub-{subject_id}-X*-rs_bold_{run_id}.nii.gz'
+}
 
 selectfiles_func = Node(SelectFiles(templates_func,
-                   base_directory=experiment_dir),
-                   name="selectfiles_func")
+                                    base_directory=experiment_dir),
+                        name="selectfiles_func")
 # ========================================================================================================
 # In[5]:
 
@@ -217,8 +219,8 @@ Plot_Motion = Node(name='Plot_Motion',
 
 # =======================================================================================================
 
-#Remove skull using antsBrainExtraction.sh, i am using the epi study-based template that I build and remove
-#the skull manually using ITKsnap
+# Remove skull using antsBrainExtraction.sh, i am using the epi study-based template that I build and remove
+# the skull manually using ITKsnap
 brain_extraction_roi = Node(ants.BrainExtraction(), name='brain_extraction_roi')
 brain_extraction_roi.inputs.dimension = 3
 brain_extraction_roi.inputs.brain_template = epi_brain
@@ -320,9 +322,9 @@ melodic.iterables = ('dim', [15, 20, 25])
 resting_fmri_preproc_func.connect([
 
 
-    (infosource, selectfiles_anat,[('subject_id','subject_id')]),
-    (infosource, selectfiles_func, [('subject_id','subject_id'),
-                                    ('run_id','run_id')]),
+    (infosource, selectfiles_anat, [('subject_id', 'subject_id')]),
+    (infosource, selectfiles_func, [('subject_id', 'subject_id'),
+                                    ('run_id', 'run_id')]),
 
     (selectfiles_func, roi, [('func', 'in_file')]),
 
@@ -332,13 +334,13 @@ resting_fmri_preproc_func.connect([
     (McFlirt, Plot_Motion, [('par_file', 'motion_par'),
                             ('rms_files', 'rms_files')]),
 
-    (roi, brain_extraction_roi, [('roi_file','anatomical_image')]),
+    (roi, brain_extraction_roi, [('roi_file', 'anatomical_image')]),
     #
     (brain_extraction_roi, coreg, [('BrainExtractionBrain', 'moving_image')]),
     (selectfiles_anat, coreg, [('anat', 'fixed_image')]),
 
-    (McFlirt, brain_extraction_4D, [('out_file','in_file')]),
-    (brain_extraction_roi, brain_extraction_4D, [('BrainExtractionMask','mask_file')]),
+    (McFlirt, brain_extraction_4D, [('out_file', 'in_file')]),
+    (brain_extraction_roi, brain_extraction_4D, [('BrainExtractionMask', 'mask_file')]),
 
 
     (brain_extraction_4D, smoothing_2d, [('out_file', 'in_files')]),
@@ -379,5 +381,15 @@ resting_fmri_preproc_func.connect([
 
 resting_fmri_preproc_func.write_graph(graph2use='colored', format='png', simple_form=True)
 
-resting_fmri_preproc_func.run(plugin='SLURM',plugin_args={'dont_resubmit_completed_jobs': True, 'max_jobs':50})
-# resting_fmri_preproc_func.run('MultiProc', plugin_args={'n_procs': 8})
+# for the cluster
+if os_name == 'CentOS Linux':
+    resting_fmri_preproc_func.run(plugin='SLURM', plugin_args={
+                                  'dont_resubmit_completed_jobs': True, 'max_jobs': 50})
+
+# for the laptop
+elif os_name == 'Ubuntu':
+    resting_fmri_preproc_func.run('MultiProc', plugin_args={'n_procs': 8})
+
+# for the iMac
+elif os_name == 'Darwin':
+    resting_fmri_preproc_func.run('MultiProc', plugin_args={'n_procs': 8})
