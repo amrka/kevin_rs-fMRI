@@ -13,4 +13,4 @@
 
 # >>> ./fix_std_master_for_reg_00007.sh /home/in/aeed/Work
 
-fslorient -setqformcode 0 $1/std_master.nii
+fslorient -setqformcode 0 $1/Kevin/std_master.nii
