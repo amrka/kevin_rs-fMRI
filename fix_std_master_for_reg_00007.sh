@@ -14,3 +14,10 @@
 # >>> ./fix_std_master_for_reg_00007.sh /home/in/aeed/Work
 
 fslorient -setqformcode 0 $1/Kevin/std_master.nii
+
+# you have to check afterwards that the header changed to:
+# qform_code	0
+# qto_xyz:1	-1.938667 0.000000 0.000000 184.173340
+# qto_xyz:2	0.000000 0.000000 1.938667 0.000000
+# qto_xyz:3	0.000000 8.000000 0.000000 0.000000
+# qto_xyz:4	0.000000 0.000000 0.000000 1.000000
