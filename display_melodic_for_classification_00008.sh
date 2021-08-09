@@ -1,14 +1,18 @@
-#!bin/bash
+#!/bin/bash
 # you pass the Kevin dir parent, the run number as (run-01 or run-02), and the subject number
 # >>> display_melodic_for_classification_00008.sh /Volumes/Amr_1TB run-01 A251120
 
 Usage() {
     echo ""
     echo "you pass the Kevin dir parent, the run number as (run-01 or run-02), and the subject number"
-    echo "Usage: >>> display_melodic_for_classification_00008.sh /Volumes/Amr_1TB run-01 A251120"
+    echo ""
+    echo "Usage:"
+    echo ">>> display_melodic_for_classification_00008.sh /Volumes/Amr_1TB run-01 A251120"
     echo ""
     exit 1
 }
+
+[ "$1" = "" ] && Usage
 
 fsleyes \
 --autoDisplay \
