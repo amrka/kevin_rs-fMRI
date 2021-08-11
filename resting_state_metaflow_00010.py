@@ -239,8 +239,8 @@ metaflow.connect([
 
 
 
-    (selectfiles, merge_transforms, [('Anat2Template', 'in1')]),
-    (selectfiles, merge_transforms, [('example2Anat', 'in2')]),
+    (selectfiles, merge_transforms, [('syn_2_temp', 'in1')]),
+    (selectfiles, merge_transforms, [('coreg_trans', 'in2')]),
 
 
     (regfilt, synApply, [('out_file', 'input_image')]),
