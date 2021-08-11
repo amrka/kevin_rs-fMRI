@@ -91,27 +91,27 @@ kernel_size = 6.5
 melodic_dim = 25
 
 templates = {
-    'Filtered_Smoothed_rs_fMRI': '{0}/Kevin/resting_state_preproc_func_workingdir/resting_fmri_preproc_func/'
+    'anat': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/'
+            '_subject_id_{subject_id}/brain_extraction_anat/sub-{subject_id}_X*_T2w_corrected_brain.nii.gz',
+
+    'Filtered_Smoothed_rs_fMRI': 'resting_state_preproc_func_workingdir/resting_fmri_preproc_func/'
                                  '_run_id_{run_id}_subject_id_{subject_id}/_blurfwhm_bx_by_bz_6.5.6.5.6.5/Add_Mean_Image/'
-                                 'afni_2d_smoothed_maths_filt_maths.nii.gz'.format(origin_dir),
+                                 'afni_2d_smoothed_maths_filt_maths.nii.gz',
 
-    'Melodic_Mix': '{0}/Kevin/resting_state_preproc_func_workingdir/resting_fmri_preproc_func/'
-                   '_run_id_{run_id}_subject_id_{subject_id}/_blurfwhm_bx_by_bz_6.5.6.5.6.5/_dim_{1}/Melodic/melodic.ica/'
-                   'melodic_mix'.format(origin_dir, melodic_dim),
+    'Melodic_Mix': 'resting_state_preproc_func_workingdir/resting_fmri_preproc_func/'
+                   '_run_id_{run_id}_subject_id_{subject_id}/_blurfwhm_bx_by_bz_6.5.6.5.6.5/_dim_25/Melodic/melodic.ica/'
+                   'melodic_mix',
 
-    'labels': '{0}/Kevin/ICA_labels/{subject_id}_{run_id}.txt'.format(origin_dir),
+    'labels': 'ICA_labels/{subject_id}_{run_id}.txt',
 
-    'coreg_trans': '{0}/Kevin/resting_state_preproc_func_workingdir/resting_fmri_preproc_func/'
-                   '_run_id_{run_id}_subject_id_{subject_id}/coregistration/transformComposite.h5'.format(
-                       origin_dir),
+    'coreg_trans': 'resting_state_preproc_func_workingdir/resting_fmri_preproc_func/'
+                   '_run_id_{run_id}_subject_id_{subject_id}/coregistration/transformComposite.h5',
 
-    'affine_2_temp': '{0}/Kevin/resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/'
-                     '_subject_id_{subject_id}/flirt_aff_T1_2_temp/sub-{subject_id}_X5_T2w_corrected_brain_flirt.mat'.format(
-                                     origin_dir),
+    'syn_2_temp': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/'
+                  '_subject_id_{subject_id}/reg_T1_2_temp/transformComposite.h5',
 
-    'syn_2_temp': '{0}/Kevin/resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/'
-                  '_subject_id_{subject_id}/reg_T1_2_temp/transformComposite.h5'.format(
-                                     origin_dir),
+    'affine_2_temp': 'resting_state_preproc_anat_workingdir/resting_fmri_preproc_anat/'
+                   '_subject_id_{subject_id}/flirt_aff_T1_2_temp/sub-{subject_id}_X*_T2w_corrected_brain_flirt.mat',
 
 
 }
@@ -149,7 +149,7 @@ def get_bad_components(labels):
     fh = open(labels)
     lines = fh.readlines()
     components_str = (lines[len(lines)-1])
-    components_list = components_str.split()
+    components_list = components_str[1:-2].split()
 
     print(components_list)
     return components_list
@@ -167,16 +167,27 @@ regfilt = Node(fsl.FilterRegressor(), name='Filter_Regressors')
 
 # =====================================================================================================
 # apply affine flirt transformations
-affineApply = Node(fsl.ApplyXFM(), name='affineApply')
-affineApply.inputs.reference = template_brain
-affineApply.inputs.apply_xfm = True
-affineApply.inputs.cost = 'corratio'
-affineApply.inputs.bins = 256
-affineApply.inputs.searchr_x = [-180, 180]
-affineApply.inputs.searchr_y = [-180, 180]
-affineApply.inputs.searchr_z = [-180, 180]
-affineApply.inputs.dof = 12
-affineApply.inputs.interp = 'trilinear'
+# you will have to apply coreg ants trans first
+affine_flirt_Apply = Node(fsl.ApplyXFM(), name='affine_flirt_Apply')
+affine_flirt_Apply.inputs.reference = template_brain
+affine_flirt_Apply.inputs.apply_xfm = True
+affine_flirt_Apply.inputs.cost = 'corratio'
+affine_flirt_Apply.inputs.bins = 256
+affine_flirt_Apply.inputs.searchr_x = [-180, 180]
+affine_flirt_Apply.inputs.searchr_y = [-180, 180]
+affine_flirt_Apply.inputs.searchr_z = [-180, 180]
+affine_flirt_Apply.inputs.dof = 12
+affine_flirt_Apply.inputs.interp = 'trilinear'
+
+# =====================================================================================================
+# In[9]:
+affine_ants_Apply = Node(ants.ApplyTransforms(), name='affine_ants_Apply')
+affine_ants_Apply.inputs.dimension = 3
+
+affine_ants_Apply.inputs.input_image_type = 3
+affine_ants_Apply.inputs.num_threads = 1
+affine_ants_Apply.inputs.float = True
+
 # =====================================================================================================
 # In[10]:
 # Merge the trasnforms
@@ -219,12 +230,13 @@ metaflow.connect([
     (infosource, selectfiles, [('subject_id', 'subject_id'),
                                ('run_id', 'run_id')]),
 
-    (infosource, get_bad_components, [('subject_id', 'subject_id')]),
+    (selectfiles, get_bad_components, [('labels', 'labels')]),
+
+    (get_bad_components, regfilt, [('components_list', 'filter_columns')]),
     (selectfiles, regfilt, [('Filtered_Smoothed_rs_fMRI', 'in_file')]),
     (selectfiles, regfilt, [('Melodic_Mix', 'design_file')]),
 
-    (selectfiles, get_bad_components, [('labels', 'labels')]),
-    (get_bad_components, regfilt, [('components_list', 'filter_columns')]),
+
 
 
     (selectfiles, merge_transforms, [('Anat2Template', 'in1')]),
@@ -235,6 +247,15 @@ metaflow.connect([
     (merge_transforms, synApply, [('out', 'transforms')]),
 
     (synApply, write_name, [('output_image', 'in_file')]),
+
+
+    (regfilt, affine_ants_Apply, [('out_file', 'input_image')]),
+    (selectfiles, affine_ants_Apply, [('coreg_trans', 'transforms'),
+                                      ('anat', 'reference_image')]),
+
+    (affine_ants_Apply, affine_flirt_Apply, [('output_image', 'in_file')]),
+    (selectfiles, affine_flirt_Apply, [('affine_2_temp', 'in_matrix_file')])
+
 
     # ==================================================================================
     # (synApply, datasink, [('output_image', 'func_filt_temp_space')]),
