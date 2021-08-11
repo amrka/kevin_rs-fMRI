@@ -214,8 +214,10 @@ synApply.inputs.reference_image = template_brain
 # write an appended list of the names of the files that enter the melodic
 
 
-def write_name(in_file, origin_dir):
-    f = open('{0}/Kevin/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt'.format(origin_dir), 'a+')
+def write_name(in_file):
+    import sys
+    f = open(
+        '{0}/Kevin/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt'.format(sys.argv[1]), 'a+')
     print(in_file)
     f.write('\n' + in_file)
     f.close()
