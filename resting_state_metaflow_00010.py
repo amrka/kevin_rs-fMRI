@@ -186,12 +186,12 @@ affine_flirt_Apply.inputs.interp = 'trilinear'
 
 # =====================================================================================================
 # In[9]:
-affine_ants_Apply = Node(ants.ApplyTransforms(), name='affine_ants_Apply')
-affine_ants_Apply.inputs.dimension = 3
+coreg_ants_Apply = Node(ants.ApplyTransforms(), name='coreg_ants_Apply')
+coreg_ants_Apply.inputs.dimension = 3
 
-affine_ants_Apply.inputs.input_image_type = 3
-affine_ants_Apply.inputs.num_threads = 1
-affine_ants_Apply.inputs.float = True
+coreg_ants_Apply.inputs.input_image_type = 3
+coreg_ants_Apply.inputs.num_threads = 1
+coreg_ants_Apply.inputs.float = True
 
 # =====================================================================================================
 # In[10]:
@@ -256,11 +256,11 @@ metaflow.connect([
     (synApply, write_name, [('output_image', 'in_file')]),
 
 
-    (regfilt, affine_ants_Apply, [('out_file', 'input_image')]),
-    (selectfiles, affine_ants_Apply, [('coreg_trans', 'transforms'),
-                                      ('anat', 'reference_image')]),
+    (regfilt, coreg_ants_Apply, [('out_file', 'input_image')]),
+    (selectfiles, coreg_ants_Apply, [('coreg_trans', 'transforms'),
+                                     ('anat', 'reference_image')]),
 
-    (affine_ants_Apply, affine_flirt_Apply, [('output_image', 'in_file')]),
+    (coreg_ants_Apply, affine_flirt_Apply, [('output_image', 'in_file')]),
     (selectfiles, affine_flirt_Apply, [('affine_2_temp', 'in_matrix_file')])
 
 
