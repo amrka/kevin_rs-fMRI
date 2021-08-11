@@ -277,7 +277,7 @@ metaflow.write_graph(graph2use='colored', format='png', simple_form=True)
 # for the cluster
 if os_name == 'CentOS Linux':
     metaflow.run(plugin='SLURM', plugin_args={
-        'dont_resubmit_completed_jobs': True, 'max_jobs': 50, 'sbatch_args': '--mem=10G'})
+        'dont_resubmit_completed_jobs': True, 'max_jobs': 50, 'sbatch_args': '--mem=40G'})
 
 # for the laptop
 elif os_name == 'Ubuntu':
