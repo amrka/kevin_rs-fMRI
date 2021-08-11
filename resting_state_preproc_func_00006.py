@@ -4,6 +4,7 @@ import re
 import os
 import sys
 import glob
+import distro
 from nipype.interfaces.matlab import MatlabCommand
 import matplotlib.pyplot as plt
 import numpy as np
