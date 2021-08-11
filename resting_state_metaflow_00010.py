@@ -216,11 +216,20 @@ synApply.inputs.reference_image = template_brain
 
 def write_name(in_file):
     import sys
-    f = open(
-        '{0}/Kevin/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt'.format(sys.argv[1]), 'a+')
-    print(in_file)
-    f.write('\n' + in_file)
-    f.close()
+    import distro
+    if distro.name() == 'CentOS Linux':
+        # using command line argument inside a node is not going to work with SLURM
+        f = open(
+            '/home/in/aeed/Work/Kevin/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt', 'a+')
+        print(in_file)
+        f.write('\n' + in_file)
+        f.close()
+    else:
+        f = open(
+            '{0}/Kevin/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt'.format(sys.argv[1]), 'a+')
+        print(in_file)
+        f.write('\n' + in_file)
+        f.close()
 
 
 write_name = Node(name='write_name',
