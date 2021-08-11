@@ -20,7 +20,23 @@ from nipype import config
 cfg = dict(execution={'remove_unnecessary_outputs': False})
 config.update_config(cfg)
 # ========================================================================================================
-# In[2]:
+# type help message in case of no input from the command line
+
+
+def help_message():
+    print("""Input argument missing \n
+    >>> python resting_state_metaflow_00009.py <directory of Kevin> \n
+    Examples (from different OS):
+    >>> python resting_state_metaflow_00009.py /Volumes/Amr_1TB
+    >>> python resting_state_metaflow_00009.py /home/in/aeed/Work
+    >>> python resting_state_metaflow_00009.py /media/amr/Amr_4TB/Work
+    """)
+
+
+if len(sys.argv) < 2:
+    help_message()
+    exit(0)
+
 # instead of having to change the script between different copmuters and os
 # we pass the directory with the name from the bash
 origin_dir = sys.argv[1]
