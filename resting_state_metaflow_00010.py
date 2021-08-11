@@ -151,8 +151,13 @@ def get_bad_components(labels):
     components_str = (lines[len(lines)-1])
     components_list = components_str[1:-2].split()
 
-    print(components_list)
-    return components_list
+    components_int_list = []
+    for element in components_list:
+        element = element.replace(',', '')
+        components_int_list.append(int(element))
+
+    print(components_int_list)
+    return components_int_list
 
 
 get_bad_components = Node(name='get_bad_components',
