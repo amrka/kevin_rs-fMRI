@@ -130,3 +130,5 @@ dmypy.json
 
 .pklz
 crash*
+
+.DS_Store
