@@ -215,7 +215,7 @@ synApply.inputs.reference_image = template_brain
 
 
 def write_name(in_file):
-    f = open('/home/in/aeed/Work/October_Acquistion/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt', 'a')
+    f = open('{0}/Kevin/resting_state_metaflow_workingdir/melodic_list_october_acquistions.txt'.format(origin_dir), 'a+')
     print(in_file)
     f.write('\n' + in_file)
     f.close()
