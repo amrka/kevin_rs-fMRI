@@ -3,6 +3,8 @@
 # The image's name format is A021120_run-01_ants.nii.gz
 # A021120_run-01_ants.nii.gz >>>> python change_files_to_contain_gp_name.py $PWD 0 7
 
+# N.B the script has no number because it is called from inside a script not itself
+
 
 import os
 import re
