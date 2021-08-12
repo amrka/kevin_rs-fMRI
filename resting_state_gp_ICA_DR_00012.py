@@ -23,36 +23,60 @@ MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 
 
 # -----------------------------------------------------------------------------------------------------
-# In[2]:
+# type help message in case of no input from the command line
 
 
-experiment_dir_melodic = '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR'
+def help_message():
+    print("""Input argument missing \n
+    >>> python resting_state_gp_ICA_DR_00012.py <directory of Kevin> \n
+    Examples (from different OS):
+    >>> python resting_state_gp_ICA_DR_00012.py /Volumes/Amr_1TB
+    >>> python resting_state_gp_ICA_DR_00012.py /home/in/aeed/Work
+    >>> python resting_state_gp_ICA_DR_00012.py /media/amr/Amr_4TB/Work
+    """)
 
 
-output_dir_melodic = '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA+DR_outputdir'
-working_dir_melodic = '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA+DR_workingdir'
+if len(sys.argv) < 2:
+    help_message()
+    exit(0)
+
+# instead of having to change the script between different copmuters and os
+# we pass the directory with the name from the bash
+origin_dir = sys.argv[1]
+
+
+# we get the name of the operating sytem to determine how to run ('MultiProc' or 'SLURM')
+os_name = distro.name()
+
+
+experiment_dir = '{0}/Kevin/'.format(origin_dir)
+
+output_dir = '{0}/Kevin/resting_state_melodic'.format(origin_dir)
+working_dir = '{0}/Kevin/resting_state_melodic'.format(origin_dir)
 
 melodic_workflow = Workflow(name='melodic_workflow')
 
-melodic_workflow.base_dir = opj(experiment_dir_melodic, working_dir_melodic)
+melodic_workflow.base_dir = opj(experiment_dir, working_dir)
 
 
 datasink_melodic = Node(DataSink(), name='datasink_melodic')
-datasink_melodic.inputs.container = output_dir_melodic
-datasink_melodic.inputs.base_directory = experiment_dir_melodic
+datasink_melodic.inputs.container = output_dir
+datasink_melodic.inputs.base_directory = experiment_dir
 datasink_melodic.inputs.parameterization = False
 
 
 # -----------------------------------------------------------------------------------------------------
 # In[3]:
-template_brain = '/home/in/aeed/Work/October_Acquistion/resting_state/anat_temp_enhanced_3.nii.gz'
-template_mask = '/home/in/aeed/Work/October_Acquistion/resting_state/anat_template_enhanced_mask_2.nii.gz'
+template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
+template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 
-subjects = '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/melodic_list_october_acquistions.txt'
+subjects_ants = '{0}/Kevin/resting_state_gp_analysis_ants/melodic_list_ants.txt'.format(origin_dir)
+subjects_flirt = '{0}/Kevin/resting_state_gp_analysis_ants/melodic_list_ants.txt'.format(origin_dir)
+
 
 melodic_group = Node(fsl.MELODIC(), name='melodic_group')
 
-melodic_group.inputs.in_files = subjects
+melodic_group.iterables = ('in_files', [subjects_ants, subjects_flirt])
 melodic_group.inputs.approach = 'concat'
 melodic_group.inputs.bg_image = template_brain
 melodic_group.inputs.bg_threshold = 10.0
@@ -147,8 +171,15 @@ melodic_workflow.connect([
 
 ])
 
-sbatch_params = '--mem=4G'
+# for the cluster
+if os_name == 'CentOS Linux':
+    melodic_workflow.run(plugin='SLURM', plugin_args={
+        'dont_resubmit_completed_jobs': True, 'max_jobs': 50, 'sbatch_args': '--mem=40G'})
 
-melodic_workflow.write_graph(graph2use='colored', format='png', simple_form=True)
-melodic_workflow.run(plugin='SLURM', plugin_args={
-                     'dont_resubmit_completed_jobs': True, 'max_jobs': 50, 'sbatch_args': sbatch_params})
+# for the laptop
+elif os_name == 'Ubuntu':
+    melodic_workflow.run('MultiProc', plugin_args={'n_procs': 8})
+
+# for the iMac
+elif os_name == 'Darwin':
+    melodic_workflow.run('MultiProc', plugin_args={'n_procs': 8})
