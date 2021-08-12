@@ -27,28 +27,26 @@ mkdir ${1}/Kevin/resting_state_gp_analysis_flirt
 # since they have the same name
 
 # images registered using non-linear ants
-for subj in ${1}/Kevin/raw_data_bids;do
-
-		imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
-		_run_id_run-01_subject_id_${subj}/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
+cd ${1}/Kevin/raw_data_bids
+for subj in *;do
+		echo ${subj}
+		imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/_run_id_run-01_subject_id_${subj}/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
 		${1}/Kevin/resting_state_gp_analysis_ants/${subj}_run-01_ants.nii.gz
 
-		imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
-		_run_id_run-02_subject_id_${subj}/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
+		imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/_run_id_run-02_subject_id_${subj}/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
 		${1}/Kevin/resting_state_gp_analysis_ants/${subj}_run-02_ants.nii.gz
 
 done
 
 
 # images registered using affine flirt
-for subj in ${1}/Kevin/raw_data_bids;do
-
-		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
-		_run_id_run-01_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
+cd ${1}/Kevin/raw_data_bids
+for subj in *;do
+		echo ${subj}
+		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/_run_id_run-01_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
 		${1}/Kevin/resting_state_gp_analysis_flirt/${subj}_run-01_flirt.nii.gz
 
-		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
-		_run_id_run-02_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
+		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/_run_id_run-02_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
 		${1}/Kevin/resting_state_gp_analysis_flirt/${subj}_run-02_flirt.nii.gz
 done
 
