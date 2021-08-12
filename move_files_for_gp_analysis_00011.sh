@@ -11,7 +11,7 @@ Usage() {
     echo "Usage:"
     echo ">>> ./move_files_for_gp_analysis_00011.sh /Volumes/Amr_1TB"
     echo ">>> ./move_files_for_gp_analysis_00011.sh /home/in/aeed/Work"
-    echo ">>> ./move_files_for_gp_analysis_00011.sh /media/Amr_4TB/Work"
+    echo ">>> ./move_files_for_gp_analysis_00011.sh /media/amr/Amr_4TB/Work"
     echo ""
     exit 1
 }
