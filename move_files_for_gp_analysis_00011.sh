@@ -51,11 +51,11 @@ for subj in *;do
 done
 
 #
-# # add the group name to the files so it is easier to make group comparisons
-# python3 change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_ants -10 -7
-# python3 change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_flirt -10 -7
-#
-# ls ${1}/Kevin/resting_state_gp_analysis_ants/*.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/melodic_list_ants.txt
-# ls ${1}/Kevin/resting_state_gp_analysis_flirt/*.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/melodic_list_flirt.txt
+# add the group name to the files so it is easier to make group comparisons
+python3 ${1}/Kevin/kevin_rs-fMRI/change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_ants 0 7
+python3 ${1}/Kevin/kevin_rs-fMRI/change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_flirt 0 7
+
+ls ${1}/Kevin/resting_state_gp_analysis_ants/*.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/melodic_list_ants.txt
+ls ${1}/Kevin/resting_state_gp_analysis_flirt/*.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/melodic_list_flirt.txt
 
 #then you create the design
