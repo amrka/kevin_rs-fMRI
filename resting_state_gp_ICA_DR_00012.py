@@ -2,6 +2,7 @@
 
 import re
 import os
+import sys
 from nipype.interfaces.matlab import MatlabCommand
 import matplotlib.pyplot as plt
 import numpy as np
