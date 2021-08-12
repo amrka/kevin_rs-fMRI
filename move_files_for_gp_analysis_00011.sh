@@ -22,15 +22,36 @@ Usage() {
 mkdir ${1}/Kevin/resting_state_gp_analysis_ants
 mkdir ${1}/Kevin/resting_state_gp_analysis_flirt
 
+
+# you need to include the names of the subjects, otherwise, you will overwrite the images
+# since they have the same name
+
 # images registered using non-linear ants
-imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
-_run_id_run-0?_subject_id_*/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
-${1}/Kevin/resting_state/resting_state_gp_ICA_DR_ants
+for subj in ${1}/Kevin/raw_data_bids;do
+
+		imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
+		_run_id_run-01_subject_id_${subj}/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
+		${1}/Kevin/resting_state_gp_analysis_ants/${subj}_run-01_ants.nii.gz
+
+		imcp ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
+		_run_id_run-02_subject_id_${subj}/synApply/afni_2d_smoothed_maths_filt_maths_regfilt_trans.nii.gz \
+		${1}/Kevin/resting_state_gp_analysis_ants/${subj}_run-02_ants.nii.gz
+
+done
+
 
 # images registered using affine flirt
-imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
-_run_id_run-0?_subject_id_*/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
-${1}/Kevin/resting_state/resting_state_gp_analysis_flirt
+for subj in ${1}/Kevin/raw_data_bids;do
+
+		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
+		_run_id_run-01_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
+		${1}/Kevin/resting_state_gp_analysis_flirt/${subj}_run-01_flirt.nii.gz
+
+		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/\
+		_run_id_run-02_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
+		${1}/Kevin/resting_state_gp_analysis_flirt/${subj}_run-02_flirt.nii.gz
+done
+
 
 # add the group name to the files so it is easier to make group comparisons
 python3 change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_ants -10 -7
