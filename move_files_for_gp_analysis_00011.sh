@@ -2,16 +2,16 @@
 # move the filtered 4D images to be used for group ICA and later for dual regression
 # we are going to do the analysis using the 4d images transformed using ants and those with affine flirt
 # you pass the Kevin dir parent
-# >>> ./move_files_for_gp_analysis_00011.sh /Volumes/Amr_1TB run-01
+# >>> ./move_files_for_gp_analysis_00011.sh /Volumes/Amr_1TB
 
 Usage() {
     echo ""
     echo "you pass the Kevin dir parent"
     echo ""
     echo "Usage:"
-    echo ">>> ./move_files_for_gp_analysis_00011.sh /Volumes/Amr_1TB run-01 "
-    echo ">>> ./move_files_for_gp_analysis_00011.sh /home/in/aeed/Work run-01 "
-    echo ">>> ./move_files_for_gp_analysis_00011.sh /media/Amr_4TB/Work run-01 "
+    echo ">>> ./move_files_for_gp_analysis_00011.sh /Volumes/Amr_1TB"
+    echo ">>> ./move_files_for_gp_analysis_00011.sh /home/in/aeed/Work"
+    echo ">>> ./move_files_for_gp_analysis_00011.sh /media/Amr_4TB/Work"
     echo ""
     exit 1
 }
