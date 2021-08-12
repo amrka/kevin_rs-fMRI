@@ -4,14 +4,16 @@
 # an outside directory for convenience
 
 # you pass the Kevin dir parent
-# >>> copy_ICA_labels_00009.sh /Volumes/Amr_1TB
+# >>> ./copy_ICA_labels_00009.sh /Volumes/Amr_1TB
 
 Usage() {
     echo ""
     echo "you pass the Kevin dir parent"
     echo ""
     echo "Usage:"
-    echo ">>> copy_ICA_labels_00009.sh /Volumes/Amr_1TB"
+    echo ">>> ./copy_ICA_labels_00009.sh /Volumes/Amr_1TB"
+    echo ">>> ./copy_ICA_labels_00009.sh /home/in/aeed/Work"
+    echo ">>> ./copy_ICA_labels_00009.sh /media/amr/Amr_4TB/Work"
     echo ""
     exit 1
 }
