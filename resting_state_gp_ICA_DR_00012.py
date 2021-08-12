@@ -73,39 +73,70 @@ template_brain = '{0}/Kevin/std_master.nii'.format(origin_dir)
 template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 
 subjects_ants = '{0}/Kevin/resting_state_gp_analysis_ants/melodic_list_ants.txt'.format(origin_dir)
-subjects_flirt = '{0}/Kevin/resting_state_gp_analysis_ants/melodic_list_ants.txt'.format(origin_dir)
+subjects_flirt = '{0}/Kevin/resting_state_gp_analysis_flirt/melodic_list_flirt.txt'.format(
+    origin_dir)
 
 
-melodic_group = Node(fsl.MELODIC(), name='melodic_group')
+melodic_group_ants = Node(fsl.MELODIC(), name='melodic_group_ants')
 
-melodic_group.iterables = ('in_files', [subjects_ants, subjects_flirt])
-melodic_group.inputs.approach = 'concat'
-melodic_group.inputs.bg_image = template_brain
-melodic_group.inputs.bg_threshold = 10.0
-melodic_group.iterables = ('dim', [10, 15, 20, 25, 40, 50, 100])
-melodic_group.inputs.tr_sec = 2.0
-melodic_group.inputs.mm_thresh = 0.5
-melodic_group.inputs.out_all = True
-melodic_group.inputs.report = True
-melodic_group.inputs.mask = template_mask
-melodic_group.inputs.no_bet = True
+melodic_group_ants.inputs.in_files = subjects_ants
+melodic_group_ants.inputs.approach = 'concat'
+melodic_group_ants.inputs.bg_image = template_brain
+melodic_group_ants.inputs.bg_threshold = 10.0
+melodic_group_ants.iterables = ('dim', [10, 15, 20, 25, 40, 50, 100])
+melodic_group_ants.inputs.tr_sec = 2.0
+melodic_group_ants.inputs.mm_thresh = 0.5
+melodic_group_ants.inputs.out_all = True
+melodic_group_ants.inputs.report = True
+melodic_group_ants.inputs.mask = template_mask
+melodic_group_ants.inputs.no_bet = True
 
+# you cannot iterate over in_files or you cannot do it with referral to origin_dir
+# anyway, it is easier to create another node
 
+melodic_group_flirt = Node(fsl.MELODIC(), name='melodic_group_flirt')
+
+melodic_group_flirt.inputs.in_files = subjects_flirt
+melodic_group_flirt.inputs.approach = 'concat'
+melodic_group_flirt.inputs.bg_image = template_brain
+melodic_group_flirt.inputs.bg_threshold = 10.0
+melodic_group_flirt.iterables = ('dim', [10, 15, 20, 25, 40, 50, 100])
+melodic_group_flirt.inputs.tr_sec = 2.0
+melodic_group_flirt.inputs.mm_thresh = 0.5
+melodic_group_flirt.inputs.out_all = True
+melodic_group_flirt.inputs.report = True
+melodic_group_flirt.inputs.mask = template_mask
+melodic_group_flirt.inputs.no_bet = True
 # ========================================================================================================
 
 # get the group_IC_maps from melodic to feed into mdual regression
 # the default output from melodic is directory
-def get_IC(out_dir):
+
+
+def get_IC_ants(out_dir):
     import os
     group_IC = os.path.abspath('{0}/melodic_IC.nii.gz'.format(out_dir))
 
     return group_IC
 
 
-get_IC = Node(Function(input_names=['out_dir'],
-                       output_names=['group_IC'],
-                       function=get_IC),
-              name='get_IC')
+get_IC_ants = Node(Function(input_names=['out_dir'],
+                            output_names=['group_IC'],
+                            function=get_IC_ants),
+                   name='get_IC_ants')
+
+
+def get_IC_flirt(out_dir):
+    import os
+    group_IC = os.path.abspath('{0}/melodic_IC.nii.gz'.format(out_dir))
+
+    return group_IC
+
+
+get_IC_flirt = Node(Function(input_names=['out_dir'],
+                             output_names=['group_IC'],
+                             function=get_IC_flirt),
+                    name='get_IC_flirt')
 
 
 # -----------------------------------------------------------------------------------------------------
@@ -168,8 +199,11 @@ get_IC = Node(Function(input_names=['out_dir'],
 
 
 melodic_workflow.connect([
-    (melodic_group, get_IC, [('out_dir', 'out_dir')]),
-    # (get_IC, dual_regression, [('group_IC', 'group_IC_maps_4D')]),
+    (melodic_group_ants, get_IC_ants, [('out_dir', 'out_dir')]),
+    # (get_IC_ants, dual_regression_ants, [('group_IC', 'group_IC_maps_4D')]),
+
+    (melodic_group_flirt, get_IC_flirt, [('out_dir', 'out_dir')]),
+    # (get_IC_flirt, dual_regression_flirt, [('group_IC', 'group_IC_maps_4D')]),
 
 ])
 
