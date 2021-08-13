@@ -21,8 +21,8 @@ fsleyes \
 --hideCursor \
 --displaySpace world  \
 --zaxis 1 \
---sliceSpacing 5.0 \
---zrange -4.147664799169454 235.99990866766535 \
+--sliceSpacing 6.0 \
+--zrange -4.147662516306809 235.99990794062023 \
 --ncols 10 \
 --nrows 4   \
 ${1}/Kevin/std_master.nii \
