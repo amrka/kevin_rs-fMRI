@@ -192,6 +192,8 @@ melodic_workflow.connect([
 
 ])
 
+melodic_workflow.write_graph(graph2use='colored', format='png', simple_form=True)
+
 # for the cluster
 if os_name == 'CentOS Linux':
     melodic_workflow.run(plugin='SLURM', plugin_args={
