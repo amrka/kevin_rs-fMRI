@@ -58,7 +58,8 @@ working_dir = '{0}/Kevin/resting_state_melodic'.format(origin_dir)
 
 
 subject_list = ['ants',
-                'flirt']
+                # 'flirt'
+                ]
 
 
 melodic_workflow = Workflow(name='melodic_workflow')
@@ -81,7 +82,8 @@ infosource.iterables = [('subject_id', subject_list)]
 # =====================================================================================================
 
 templates = {
-    'subjects': 'resting_state_gp_analysis_{subject_id}/melodic_list_{subject_id}.txt'
+    'subjects': 'resting_state_gp_analysis_{subject_id}/melodic_list_{subject_id}.txt',
+    'DR_subjects': 'resting_state_gp_analysis_{subject_id}/DR_list_{subject_id}_run_0*.txt'
 }
 
 selectfiles = Node(SelectFiles(templates,
@@ -135,49 +137,15 @@ get_IC = Node(Function(input_names=['out_dir'],
 # /media/amr/HDD/Work/October_Acquistion/Dual_Regression_10 \
 # `cat /media/amr/AMR_FAWZY/Octuber_MELODIC/Melodic_Subjects_10.txt` -v;
 
-# design = '/home/in/aeed/Work/October_Acquistion/resting_state/Design_october_Acquistion_dual_regression.mat'
-# contrast = '/home/in/aeed/Work/October_Acquistion/resting_state/Design_october_Acquistion_dual_regression.con'
+design = '{0}/Kevin/designs/kevin_design.mat'.format(origin_dir)
+contrast = '{0}/Kevin/designs/kevin_design.con'.format(origin_dir)
 #
 #
-# dual_regression = Node(fsl.model.DualRegression(), name='dual_regression')
-# dual_regression.inputs.design_file = design
-# dual_regression.inputs.con_file = contrast
-# dual_regression.inputs.des_norm = True
-# dual_regression.inputs.n_perm = 5000
-# dual_regression.inputs.in_files = [
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_242.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_243.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_244.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_245.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_252.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_253.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_255.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_281.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_282.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_286.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_287.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_362.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_363.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_364.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_365.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/A_rsfMRI_filtered_366.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_229.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_230.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_232.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_233.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_234.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_235.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_236.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_237.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_261.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_262.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_263.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_264.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_273.nii.gz',
-# '/home/in/aeed/Work/October_Acquistion/resting_state/resting_state_gp_ICA_DR/B_rsfMRI_filtered_274.nii.gz',]
-#
-#
-#
+dual_regression = Node(fsl.model.DualRegression(), name='dual_regression')
+dual_regression.inputs.design_file = design
+dual_regression.inputs.con_file = contrast
+dual_regression.inputs.des_norm = True
+dual_regression.inputs.n_perm = 50
 
 # -----------------------------------------------------------------------------------------------------
 # In[5]:
@@ -187,7 +155,8 @@ melodic_workflow.connect([
     (infosource, selectfiles, [('subject_id', 'subject_id')]),
     (selectfiles, melodic_group, [('subjects', 'in_files')]),
     (melodic_group, get_IC, [('out_dir', 'out_dir')]),
-    # (get_IC, dual_regression_ants, [('group_IC', 'group_IC_maps_4D')]),
+    (get_IC, dual_regression, [('group_IC', 'group_IC_maps_4D')]),
+    (selectfiles, dual_regression, [('DR_subjects', 'in_files')])
 
 
 ])
