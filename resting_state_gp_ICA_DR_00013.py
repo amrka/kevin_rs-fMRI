@@ -61,6 +61,8 @@ subject_list = ['ants',
                 # 'flirt'
                 ]
 
+run_list = ['run-01',
+            'run-02']
 
 melodic_workflow = Workflow(name='melodic_workflow')
 
@@ -75,15 +77,15 @@ datasink_melodic.inputs.parameterization = False
 # =====================================================================================================
 # In[3]:
 # Infosource - a function free node to iterate over the list of subject names
-infosource = Node(IdentityInterface(fields=['subject_id']),
+infosource = Node(IdentityInterface(fields=['subject_id', 'run_id']),
                   name="infosource")
-infosource.iterables = [('subject_id', subject_list)]
-
+infosource.iterables = [('subject_id', subject_list),
+                        ('run_id', run_list)]
 # =====================================================================================================
 
 templates = {
     'subjects': 'resting_state_gp_analysis_{subject_id}/melodic_list_{subject_id}.txt',
-    'DR_subjects': 'resting_state_gp_analysis_{subject_id}/DR_list_{subject_id}_run_0*.txt'
+    'DR_subjects': 'resting_state_gp_analysis_{subject_id}/DR_list_{subject_id}_{run_id}.txt'
 }
 
 selectfiles = Node(SelectFiles(templates,
