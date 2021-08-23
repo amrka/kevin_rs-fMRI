@@ -61,9 +61,6 @@ subject_list = ['ants',
                 # 'flirt'
                 ]
 
-run_list = ['run-01',
-            'run-02']
-
 melodic_workflow = Workflow(name='melodic_workflow')
 
 melodic_workflow.base_dir = opj(experiment_dir, working_dir)
@@ -77,15 +74,13 @@ datasink_melodic.inputs.parameterization = False
 # =====================================================================================================
 # In[3]:
 # Infosource - a function free node to iterate over the list of subject names
-infosource = Node(IdentityInterface(fields=['subject_id', 'run_id']),
+infosource = Node(IdentityInterface(fields=['subject_id']),
                   name="infosource")
-infosource.iterables = [('subject_id', subject_list),
-                        ('run_id', run_list)]
+infosource.iterables = [('subject_id', subject_list)]
 # =====================================================================================================
 
 templates = {
     'subjects': 'resting_state_gp_analysis_{subject_id}/melodic_list_{subject_id}.txt',
-    'DR_subjects': 'resting_state_gp_analysis_{subject_id}/DR_list_{subject_id}_{run_id}.txt'
 }
 
 selectfiles = Node(SelectFiles(templates,
@@ -139,6 +134,9 @@ get_IC = Node(Function(input_names=['out_dir'],
 # /media/amr/HDD/Work/October_Acquistion/Dual_Regression_10 \
 # `cat /media/amr/AMR_FAWZY/Octuber_MELODIC/Melodic_Subjects_10.txt` -v;
 
+DR_subjects=['{0}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-01.txt'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-02.txt'.format(origin_dir)]
+
 design = '{0}/Kevin/designs/kevin_design.mat'.format(origin_dir)
 contrast = '{0}/Kevin/designs/kevin_design.con'.format(origin_dir)
 #
@@ -148,18 +146,18 @@ dual_regression.inputs.design_file = design
 dual_regression.inputs.con_file = contrast
 dual_regression.inputs.des_norm = True
 dual_regression.inputs.n_perm = 50
+dual_regression.iterables = ('in_files',DR_subjects)
 
 # -----------------------------------------------------------------------------------------------------
 # In[5]:
 
 
 melodic_workflow.connect([
-    (infosource, selectfiles, [('subject_id', 'subject_id'),
-                               ('run_id', 'run_id')]),
+    (infosource, selectfiles, [('subject_id', 'subject_id')]),
     (selectfiles, melodic_group, [('subjects', 'in_files')]),
     (melodic_group, get_IC, [('out_dir', 'out_dir')]),
     (get_IC, dual_regression, [('group_IC', 'group_IC_maps_4D')]),
-    (selectfiles, dual_regression, [('DR_subjects', 'in_files')])
+    # (selectfiles, dual_regression, [('DR_subjects', 'in_files')])
 
 
 ])
