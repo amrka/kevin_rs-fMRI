@@ -58,7 +58,7 @@ working_dir = '{0}/Kevin/resting_state_melodic'.format(origin_dir)
 
 
 subject_list = ['ants',
-                # 'flirt'
+                'flirt'
                 ]
 
 melodic_workflow = Workflow(name='melodic_workflow')
