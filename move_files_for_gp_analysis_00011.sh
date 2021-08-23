@@ -62,18 +62,18 @@ ls ${1}/Kevin/resting_state_gp_analysis_flirt/*.nii.gz >> ${1}/Kevin/resting_sta
 # some of the subjects included in melodic analysis, but were excluded from the dual regression
 # only those who have the prefix A_* or B_* will be included in the analysis
 # ants
-ls ${1}/Kevin/resting_state_gp_analysis_ants/A_*_run-01_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run_01.txt
-ls ${1}/Kevin/resting_state_gp_analysis_ants/B_*_run-01_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run_01.txt
+ls ${1}/Kevin/resting_state_gp_analysis_ants/A_*_run-01_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-01.txt
+ls ${1}/Kevin/resting_state_gp_analysis_ants/B_*_run-01_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-01.txt
 
-ls ${1}/Kevin/resting_state_gp_analysis_ants/A_*_run-02_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run_02.txt
-ls ${1}/Kevin/resting_state_gp_analysis_ants/B_*_run-02_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run_02.txt
+ls ${1}/Kevin/resting_state_gp_analysis_ants/A_*_run-02_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-02.txt
+ls ${1}/Kevin/resting_state_gp_analysis_ants/B_*_run-02_ants.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-02.txt
 
 # flirt
-ls ${1}/Kevin/resting_state_gp_analysis_flirt/A_*_run-01_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run_01.txt
-ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-01_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run_01.txt
+ls ${1}/Kevin/resting_state_gp_analysis_flirt/A_*_run-01_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-01.txt
+ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-01_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-01.txt
 
-ls ${1}/Kevin/resting_state_gp_analysis_flirt/A_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run_02.txt
-ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run_02.txt
+ls ${1}/Kevin/resting_state_gp_analysis_flirt/A_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-02.txt
+ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-02.txt
 
 
 #then you create the design
