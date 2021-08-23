@@ -145,7 +145,7 @@ dual_regression = Node(fsl.model.DualRegression(), name='dual_regression')
 dual_regression.inputs.design_file = design
 dual_regression.inputs.con_file = contrast
 dual_regression.inputs.des_norm = True
-dual_regression.inputs.n_perm = 50
+dual_regression.inputs.n_perm = 0
 dual_regression.iterables = ('in_files',DR_subjects)
 
 # -----------------------------------------------------------------------------------------------------
