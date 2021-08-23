@@ -154,7 +154,8 @@ dual_regression.inputs.n_perm = 50
 
 
 melodic_workflow.connect([
-    (infosource, selectfiles, [('subject_id', 'subject_id')]),
+    (infosource, selectfiles, [('subject_id', 'subject_id'),
+                               ('run_id', 'run_id')]),
     (selectfiles, melodic_group, [('subjects', 'in_files')]),
     (melodic_group, get_IC, [('out_dir', 'out_dir')]),
     (get_IC, dual_regression, [('group_IC', 'group_IC_maps_4D')]),
