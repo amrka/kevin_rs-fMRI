@@ -133,9 +133,36 @@ get_IC = Node(Function(input_names=['out_dir'],
 # 5000 \
 # /media/amr/HDD/Work/October_Acquistion/Dual_Regression_10 \
 # `cat /media/amr/AMR_FAWZY/Octuber_MELODIC/Melodic_Subjects_10.txt` -v;
+# You need to pass the acutal filenames not just as txt list
 
-DR_subjects=['{0}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-01.txt'.format(origin_dir),
-'{0}/Kevin/resting_state_gp_analysis_ants/DR_list_ants_run-02.txt'.format(origin_dir)]
+dr_run_01=[
+'{0}/Kevin/resting_state_gp_analysis_ants/A_A021120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/A_A241120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/A_A251120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/A_B201120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A051120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A061120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A231120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A271020_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_B191120_run-01_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_B231020_run-01_ants.nii.gz'.format(origin_dir)]
+
+dr_run_02=[
+'{0}/Kevin/resting_state_gp_analysis_ants/A_A021120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/A_A241120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/A_A251120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/A_B202120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A051120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A061120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A231120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_A271020_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_B191120_run-02_ants.nii.gz'.format(origin_dir),
+'{0}/Kevin/resting_state_gp_analysis_ants/B_B231020_run-02_ants.nii.gz'.format(origin_dir)
+]
+
+DR_subjects=[dr_run_01,
+dr_run_02
+]
 
 design = '{0}/Kevin/designs/kevin_design.mat'.format(origin_dir)
 contrast = '{0}/Kevin/designs/kevin_design.con'.format(origin_dir)
