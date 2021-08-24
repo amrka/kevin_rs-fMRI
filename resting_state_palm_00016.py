@@ -101,7 +101,7 @@ def palm(palm_list, design, contrast, template_mask):
     from nipype.interfaces.base import CommandLine
 
  # that is the correct mask
-    cmd = ("palm {palm_list} \
+    cmd = ("palm `cat {palm_list}` \
     -m {template_mask} \
     -d {design} -t {contrast} \
     -T -noniiclass -n 100 -corrcon -corrmod -save1-p -nouncorrected -o dr_stage3")
