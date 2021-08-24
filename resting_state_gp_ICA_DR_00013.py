@@ -192,7 +192,7 @@ melodic_workflow.connect([
     (melodic_group, get_IC, [('out_dir', 'out_dir')]),
     (get_IC, dual_regression, [('group_IC', 'group_IC_maps_4D')]),
     # ________________________________________________________________
-    (dual_regression, datasink_melodic, [('output', 'dual_regression_output')])
+    (dual_regression, datasink_melodic, [('out_dir', 'dual_regression_output')])
 
 
 ])
