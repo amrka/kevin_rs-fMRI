@@ -82,6 +82,9 @@ infosource.iterables = [('dim_id', dim_list),
 
 templates = {
     'palm_list': 'palm_ants/{run_id}/{dim_id}/palm_{dim_id}_{run_id}.txt',
+    'design': 'designs/kevin_design.mat',
+    'contrast': 'designs/kevin_design.con',
+    'template_mask': 'std_master_mask.nii',
 }
 
 selectfiles = Node(SelectFiles(templates,
@@ -89,13 +92,10 @@ selectfiles = Node(SelectFiles(templates,
                    name="selectfiles")
 
 
-design = '{0}/Kevin/designs/kevin_design.mat'.format(origin_dir)
-contrast = '{0}/Kevin/designs/kevin_design.con'.format(origin_dir)
-template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 # ====================================================================================================
 
 
-def palm(palm_list):
+def palm(palm_list, design, contrast, template_mask):
     import os
     import glob
     from nipype.interfaces.base import CommandLine
@@ -117,7 +117,7 @@ def palm(palm_list):
 
 
 palm = Node(name='palm',
-                 interface=Function(input_names=['palm_list'],
+                 interface=Function(input_names=['palm_list', 'design', 'contrast', 'template_mask'],
                                     output_names=['P_values'],
                                     function=palm))
 
@@ -127,7 +127,11 @@ palm_workflow.connect([
     (infosource, selectfiles, [('dim_id', 'dim_id'),
                                ('run_id', 'run_id')]),
 
-    (selectfiles, palm, [('palm_list', 'palm_list')])
+    (selectfiles, palm, [('palm_list', 'palm_list'),
+                         ('design', 'design'),
+                         ('contrast', 'contrast'),
+                         ('template_mask', 'template_mask')]),
+
 
 ])
 
