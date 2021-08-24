@@ -35,7 +35,7 @@ mkdir -p palm_ants/run-02/{dim_10,dim_15,dim_20,dim_25,dim_40,dim_50,dim_100}
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_10/palm_dim_10_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_10/palm_dim_10_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10\
@@ -49,7 +49,7 @@ done
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_15\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_15/palm_dim_15_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_15/palm_dim_15_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_15\
@@ -63,7 +63,7 @@ done
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_20\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_20/palm_dim_20_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_20/palm_dim_20_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_20\
@@ -77,7 +77,7 @@ done
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_25/palm_dim_25_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_25/palm_dim_25_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25\
@@ -90,7 +90,7 @@ done
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_40\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_40/palm_dim_40_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_40/palm_dim_40_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_40\
@@ -103,7 +103,7 @@ done
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_50\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_50/palm_dim_50_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_50/palm_dim_50_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_50\
@@ -116,7 +116,7 @@ done
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_100\
 /d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
-    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_100/palm_dim_100_run-02.txt;
+    echo "-i $img" >> ${1}/Kevin/palm_ants/run-01/dim_100/palm_dim_100_run-01.txt;
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_100\
