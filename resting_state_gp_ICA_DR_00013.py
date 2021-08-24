@@ -72,6 +72,10 @@ datasink_melodic.inputs.container = output_dir
 datasink_melodic.inputs.base_directory = experiment_dir
 datasink_melodic.inputs.parameterization = False
 
+# sub to change the hash name to legible
+substitutions = [('43ddee1b109476bbf41ba6bf431ef9eefb2055bd', 'run-02'),
+                 ('d0f02a8721eff087f281113015c672685b8a198b', 'run-01'),
+                 ]
 # =====================================================================================================
 # In[3]:
 # Infosource - a function free node to iterate over the list of subject names
@@ -187,7 +191,8 @@ melodic_workflow.connect([
     (selectfiles, melodic_group, [('subjects', 'in_files')]),
     (melodic_group, get_IC, [('out_dir', 'out_dir')]),
     (get_IC, dual_regression, [('group_IC', 'group_IC_maps_4D')]),
-    # (selectfiles, dual_regression, [('DR_subjects', 'in_files')])
+    # ________________________________________________________________
+    (dual_regression, datasink, [('output', 'dual_regression_output')])
 
 
 ])
