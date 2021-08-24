@@ -26,3 +26,8 @@ cd ${1}/Kevin
 mkdir palm_ants
 mkdir -p palm_ants/run-01/{dim_10,dim_15,dim_20,dim_25,dim_40,dim_50,dim_100}
 mkdir -p palm_ants/run-02/{dim_10,dim_15,dim_20,dim_25,dim_40,dim_50,dim_100}
+
+
+
+
+for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do echo "-i $img"; done
