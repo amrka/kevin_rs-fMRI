@@ -104,7 +104,7 @@ def palm(palm_list, design, contrast, template_mask):
     cmd = ("palm `cat {palm_list}` \
     -m {template_mask} \
     -d {design} -t {contrast} \
-    -T -noniiclass -n 100 -corrcon -corrmod -save1-p -nouncorrected -o dr_stage3")
+    -T -noniiclass -n 5000 -corrcon -corrmod -save1-p -nouncorrected -o dr_stage3")
     # start with 5000 like the rest of resting state
 
     cl = CommandLine(cmd.format(palm_list=palm_list,
@@ -143,7 +143,7 @@ palm_workflow.write_graph(graph2use='colored', format='png', simple_form=True)
 # for the cluster
 if os_name == 'CentOS Linux':
     palm_workflow.run(plugin='SLURM', plugin_args={
-        'dont_resubmit_completed_jobs': True, 'max_jobs': 50})
+        'dont_resubmit_completed_jobs': True, 'max_jobs': 50, 'sbatch_args': '--mem=40G'})
 
 # for the laptop
 elif os_name == 'Ubuntu':
