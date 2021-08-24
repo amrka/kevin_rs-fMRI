@@ -53,7 +53,7 @@ for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_15\
-/43ddee1b159476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
+/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
     echo "-i $img" >> ${1}/Kevin/palm_ants/run-02/dim_15/palm_dim_15_run-02.txt;
 done
@@ -67,7 +67,7 @@ for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_20\
-/43ddee1b159476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
+/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
     echo "-i $img" >> ${1}/Kevin/palm_ants/run-02/dim_20/palm_dim_20_run-02.txt;
 done
@@ -81,7 +81,7 @@ for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25\
-/43ddee1b159476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
+/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
     echo "-i $img" >> ${1}/Kevin/palm_ants/run-02/dim_25/palm_dim_25_run-02.txt;
 done
@@ -94,7 +94,7 @@ for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_40\
-/43ddee1b159476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
+/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
     echo "-i $img" >> ${1}/Kevin/palm_ants/run-02/dim_40/palm_dim_40_run-02.txt;
 done
@@ -107,7 +107,7 @@ for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_50\
-/43ddee1b159476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
+/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
     echo "-i $img" >> ${1}/Kevin/palm_ants/run-02/dim_50/palm_dim_50_run-02.txt;
 done
@@ -120,7 +120,7 @@ for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants
 done
 
 for img in ls ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_100\
-/43ddee1b159476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
+/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
 
     echo "-i $img" >> ${1}/Kevin/palm_ants/run-02/dim_100/palm_dim_100_run-02.txt;
 done
