@@ -87,17 +87,18 @@ templates = {
 selectfiles = Node(SelectFiles(templates,
                                base_directory=experiment_dir),
                    name="selectfiles")
+
+
+design = '{0}/Kevin/designs/kevin_design.mat'.format(origin_dir)
+contrast = '{0}/Kevin/designs/kevin_design.con'.format(origin_dir)
+template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 # ====================================================================================================
 
 
-def palm(palm_list, origin_dir):
+def palm(palm_list):
     import os
     import glob
     from nipype.interfaces.base import CommandLine
-
-    design = '{0}/Kevin/designs/kevin_design.mat'.format(origin_dir)
-    contrast = '{0}/Kevin/designs/kevin_design.con'.format(origin_dir)
-    template_mask = '{0}/Kevin/std_master_mask.nii'.format(origin_dir)
 
  # that is the correct mask
     cmd = ("palm {palm_list} \
