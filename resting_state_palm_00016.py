@@ -124,7 +124,7 @@ palm = Node(name='palm',
 palm_workflow.connect([
 
     (infosource, selectfiles, [('dim_id', 'dim_id'),
-                               ('dim_id', 'dim_id')]),
+                               ('run_id', 'run_id')]),
 
     (selectfiles, palm, [('palm_list', 'palm_list')])
 
