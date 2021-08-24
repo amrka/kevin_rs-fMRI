@@ -90,7 +90,7 @@ selectfiles = Node(SelectFiles(templates,
 # ====================================================================================================
 
 
-def palm(palm_list):
+def palm(palm_list, origin_dir):
     import os
     import glob
     from nipype.interfaces.base import CommandLine
