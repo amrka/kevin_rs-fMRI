@@ -29,6 +29,7 @@ mkdir -p ${1}/Kevin/subtraction/{_dim_10,_dim_15,_dim_20,_dim_25,_dim_40,_dim_50
 # run-01 ->'d0f02a8721eff087f281113015c672685b8a198b'
 
 # N.B I checked that fslmaths subtraction works on all volumes of 4D images
+# N.B I checked random ICs in each dim manually to ascertain subtraction was correct
 for img in ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_*/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/dr_stage2_ic*.nii.gz;do
     # extract the dim instead of looping over all of them or worse, copying the code many times
     dim=`echo $img | sed s?\$1/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_?? | sed s?/43ddee1b109476bbf41ba6bf431ef9eefb2055bd/dual_regression/output/.*??`
