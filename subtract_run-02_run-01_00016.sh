@@ -3,16 +3,16 @@
 # subtract run-02 - run-01 to get the difference to use it in palm
 
 # you pass the Kevin dir parent
-# >>> ./subtract_run-02_run-01_00017.sh /Volumes/Amr_1TB
+# >>> ./subtract_run-02_run-01_00016.sh /Volumes/Amr_1TB
 
 Usage() {
     echo ""
     echo "you pass the Kevin dir parent"
     echo ""
     echo "Usage:"
-    echo ">>> ./subtract_run-02_run-01_00017.sh /Volumes/Amr_1TB"
-    echo ">>> ./subtract_run-02_run-01_00017.sh /home/in/aeed/Work"
-    echo ">>> ./subtract_run-02_run-01_00017.sh /media/amr/Amr_4TB/Work"
+    echo ">>> ./subtract_run-02_run-01_00016.sh /Volumes/Amr_1TB"
+    echo ">>> ./subtract_run-02_run-01_00016.sh /home/in/aeed/Work"
+    echo ">>> ./subtract_run-02_run-01_00016.sh /media/amr/Amr_4TB/Work"
     echo ""
     exit 1
 }

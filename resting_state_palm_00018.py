@@ -31,11 +31,11 @@ MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 
 def help_message():
     print("""Input argument missing \n
-    >>> python resting_state_palm_00016.py <directory of Kevin> \n
+    >>> python resting_state_palm_00018.py <directory of Kevin> \n
     Examples (from different OS):
-    >>> python resting_state_palm_00016.py /Volumes/Amr_1TB
-    >>> python resting_state_palm_00016.py /home/in/aeed/Work
-    >>> python resting_state_palm_00016.py /media/amr/Amr_4TB/Work
+    >>> python resting_state_palm_00018.py /Volumes/Amr_1TB
+    >>> python resting_state_palm_00018.py /home/in/aeed/Work
+    >>> python resting_state_palm_00018.py /media/amr/Amr_4TB/Work
     """)
 
 

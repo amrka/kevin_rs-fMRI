@@ -4,16 +4,16 @@
 
 
 # you pass the Kevin dir parent
-# >>> ./create_subtract_PALM_directories_00018.sh /Volumes/Amr_1TB
+# >>> ./create_subtract_PALM_directories_00017.sh /Volumes/Amr_1TB
 
 Usage() {
     echo ""
     echo "you pass the Kevin dir parent"
     echo ""
     echo "Usage:"
-    echo ">>> ./create_subtract_PALM_directories_00018.sh /Volumes/Amr_1TB"
-    echo ">>> ./create_subtract_PALM_directories_00018.sh /home/in/aeed/Work"
-    echo ">>> ./create_subtract_PALM_directories_00018.sh /media/amr/Amr_4TB/Work"
+    echo ">>> ./create_subtract_PALM_directories_00017.sh /Volumes/Amr_1TB"
+    echo ">>> ./create_subtract_PALM_directories_00017.sh /home/in/aeed/Work"
+    echo ">>> ./create_subtract_PALM_directories_00017.sh /media/amr/Amr_4TB/Work"
     echo ""
     exit 1
 }
