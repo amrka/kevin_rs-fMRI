@@ -60,7 +60,7 @@ working_dir = '{0}/Kevin/resting_state_melodic'.format(origin_dir)
 
 dim_list = ['dim_10', 'dim_15', 'dim_20', 'dim_25', 'dim_40', 'dim_50', 'dim_100']
 
-run_list = ['run-01', 'run-02']
+run_list = ['run-01', 'run-02', 'subtract']
 palm_workflow = Workflow(name='palm_workflow')
 
 palm_workflow.base_dir = opj(experiment_dir, working_dir)
