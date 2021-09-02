@@ -163,4 +163,4 @@ grot1=netmat(1:Ngroup1,i); grot2=netmat(Ngroup1+1:end,i);
 grotl=max(length(grot1),length(grot2));
 grot1=[grot1;nan(grotl-length(grot1),1)]; grot2=[grot2;nan(grotl-length(grot2),1)];
 grot_both = [grot1, grot2]
-csvwrite('/Users/amr/Dropbox/thesis/resting/FSLNets_pics/regularized_partial_corr_14_7.csv', grot_both)
+%csvwrite('/Users/amr/Dropbox/thesis/resting/FSLNets_pics/regularized_partial_corr_14_7.csv', grot_both)
