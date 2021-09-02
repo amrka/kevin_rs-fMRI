@@ -11,15 +11,16 @@ addpath /Users/amr/Downloads/L1precision            % L1precision toolbox
 addpath /Users/amr/Downloads/pwling                 % pairwise causality toolbox
 addpath(sprintf('%s/etc/matlab',getenv('FSLDIR')))
 %%
-n_dims = 10
-group_maps='/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/melodic_IC';     % spatial maps 4D NIFTI file, e.g. from group-ICA No extension needed
+n_dims = 25
+system('dir=/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/;/Volumes/Amr_1TB/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Volumes/Amr_1TB/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
+
+group_maps='/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC';     % spatial maps 4D NIFTI file, e.g. from group-ICA No extension needed
    %%% you must have already run the following (outside MATLAB), to create summary pictures of the maps in the NIFTI file:
    %%% slices_summary <group_maps> 4 $FSLDIR/data/standard/MNI152_T1_2mm <group_maps>.sum
 % run-01
-ts_dir='/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output';                           % dual regression output directory, containing all subjects' timeseries
+ts_dir='/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output';                           % dual regression output directory, containing all subjects' timeseries
 
-%system('dir=/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/;/Volumes/Amr_1TB/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Volumes/Amr_1TB/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
-%%% [tail: illegal offset -- +] error can be avoided by adding -1 to summary_slices command
+%%%% [tail: illegal offset -- +] error can be avoided by adding -1 to summary_slices command
 %%% it will return one slice image per component instead of three, but here will be no errors
 %%% adding -d flag does not pan out very well, the template becomes way too much darker
 
@@ -31,7 +32,7 @@ ts_spectra=nets_spectra(ts);   % have a look at mean timeseries spectra
 
 %%
 %%% cleanup and remove bad nodes' timeseries (whichever is NOT listed in ts.DD is *BAD*).
-ts.DD=[1,2,3,4,5,6,7,8,9,10];  % list the good nodes in your group-ICA output (counting starts at 1, not 0)
+ts.DD=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25];  % list the good nodes in your group-ICA output (counting starts at 1, not 0)
 % ts.UNK=[10];  optionally setup a list of unknown components (where you're unsure of good vs bad)
 ts=nets_tsclean(ts,1);                   % regress the bad nodes out of the good, and then remove the bad nodes' timeseries (1=aggressive, 0=unaggressive (just delete bad)).
                                          % For partial-correlation netmats, if you are going to do nets_tsclean, then it *probably* makes sense to:
@@ -58,11 +59,11 @@ netmats_rP=  nets_netmats(ts,1,'ridgep', 0.1);     % Ridge Regression partial, w
 %%
 % save matrices fro future use
 
-save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/run-01_dim_10_netmats_F.mat', 'netmats_F')
-save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/run-01_dim_10_netmats_P.mat', 'netmats_P')
-save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/run-01_dim_10_netmats_rP.mat', 'netmats_rP')
+save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25_netmats_F.mat', 'netmats_F')
+save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25_netmats_P.mat', 'netmats_P')
+save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25_netmats_rP.mat', 'netmats_rP')
 
-% save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/run-01_dim_10__netmats3.mat', 'netmats3')
+% save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25__netmats3.mat', 'netmats3')
 %%
 %%% view of consistency of netmats across subjects; returns t-test Z values as a network matrix
 %%% second argument (0 or 1) determines whether to display the Z matrix and a consistency scatter plot
@@ -79,9 +80,9 @@ save('/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_
 % it was not working on mac (it shows the hierarchy without the components pics), but worked on linux, becaause the versions of fslnets were different
 % obivously in Mac's more recent version, the nets_hierarchy.m script was changed and requires 3 slices images
 % the problem was resolved once I replaced that version of nets_hierarchy with the linux one (the other one is renamed _net_hierarchy.m )
-nets_hierarchy(Znet_F,Znet_P,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/melodic_IC');
-nets_hierarchy(Znet_F,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/melodic_IC');
-nets_hierarchy(Znet_P,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/melodic_IC');
+nets_hierarchy(Znet_F,Znet_P,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC');
+nets_hierarchy(Znet_F,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC');
+nets_hierarchy(Znet_P,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC');
 
 
 %%% view interactive netmat web-based display
@@ -91,8 +92,8 @@ nets_hierarchy(Znet_P,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodi
 % >>> >>> python -m http.server
 % then go to the webbrowser and type http://localhost:8000/
 % http://127.0.0.1:8000/ sometimes work better
-nets_netweb(Znet_F,Znet_P,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/melodic_IC','/Applications/XAMPP/htdocs/run-01_dim_10_netweb_F_P');
-nets_netweb(Znet_F,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_10/melodic_group/melodic_IC','/Applications/XAMPP/htdocs/run-01_dim_10_netweb_F_rP');
+nets_netweb(Znet_F,Znet_P,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC','/Applications/XAMPP/htdocs/run-01_dim_25_netweb_F_P');
+nets_netweb(Znet_F,Znet_rP,ts.DD,'/Volumes/Amr_1TB/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC','/Applications/XAMPP/htdocs/run-01_dim_25_netweb_F_rP');
 
 
 %%% cross-subject GLM, with inference in randomise (assuming you already have the GLM design.mat and design.con files).
