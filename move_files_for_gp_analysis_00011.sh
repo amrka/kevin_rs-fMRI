@@ -53,20 +53,20 @@ done
 # A301020
 # there are two runs, run-01 and run-02
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-01_ants.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-02_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-01_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-01_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-02_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-02_ants.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-01_ants.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-02_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-01_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-01_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-02_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-02_ants.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-01_ants.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-02_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-01_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-01_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-02_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-02_ants.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-01_ants.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-02_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-01_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-01_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-02_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-02_ants.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-01_ants.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-02_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-01_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-01_ants.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-02_ants.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-02_ants.nii.gz
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # images registered using affine flirt
@@ -90,20 +90,20 @@ done
 # A301020
 # there are two runs, run-01 and run-02
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-01_flirt.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-02_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-01_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-01_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-02_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-02_flirt.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-01_flirt.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-02_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-01_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-01_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-02_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-02_flirt.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-01_flirt.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-02_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-01_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-01_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-02_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-02_flirt.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-01_flirt.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-02_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-01_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-01_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-02_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-02_flirt.nii.gz
 
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-01_flirt.nii.gz
-fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-02_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-01_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-01_flirt.nii.gz
+fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-02_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-02_flirt.nii.gz
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
