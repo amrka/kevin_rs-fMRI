@@ -18,6 +18,10 @@ Usage() {
 
 [ "$1" = "" ] && Usage
 
+# delete the folders if existed 
+rm -r ${1}/Kevin/resting_state_gp_analysis_ants
+rm -r ${1}/Kevin/resting_state_gp_analysis_flirt
+
 
 mkdir ${1}/Kevin/resting_state_gp_analysis_ants
 mkdir ${1}/Kevin/resting_state_gp_analysis_flirt
@@ -75,5 +79,22 @@ ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-01_flirt.nii.gz >> ${1}/Ke
 ls ${1}/Kevin/resting_state_gp_analysis_flirt/A_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-02.txt
 ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-02.txt
 
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# changing the orientation of three subjects that has the optic fiber placed in the left side of the brain
 
+# the three subjects are:
+# B191120
+# B201120
+# B231020
+# there are two runs, run-01 and run-02
+
+
+
+
+
+
+
+
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #then you create the design
