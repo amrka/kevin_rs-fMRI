@@ -18,7 +18,7 @@ Usage() {
 
 [ "$1" = "" ] && Usage
 
-# delete the folders if existed 
+# delete the folders if existed
 rm -r ${1}/Kevin/resting_state_gp_analysis_ants
 rm -r ${1}/Kevin/resting_state_gp_analysis_flirt
 
@@ -42,7 +42,33 @@ for subj in *;do
 
 done
 
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# changing the orientation of three subjects that has the optic fiber placed in the left side of the brain
 
+# the three subjects are:
+# B191120
+# B201120
+# B231020
+# A031120
+# A301020
+# there are two runs, run-01 and run-02
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-01_ants.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B191120_run-02_ants.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-01_ants.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B201120_run-02_ants.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-01_ants.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/B231020_run-02_ants.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-01_ants.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A031120_run-02_ants.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-01_ants.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_ants/A301020_run-02_ants.nii.gz
+
+# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # images registered using affine flirt
 cd ${1}/Kevin/raw_data_bids
 for subj in *;do
@@ -53,8 +79,34 @@ for subj in *;do
 		imcp  ${1}/Kevin/resting_state_metaflow_workingdir/metaflow/_run_id_run-02_subject_id_${subj}/affine_flirt_Apply/afni_2d_smoothed_maths_filt_maths_regfilt_trans_flirt.nii.gz \
 		${1}/Kevin/resting_state_gp_analysis_flirt/${subj}_run-02_flirt.nii.gz
 done
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# changing the orientation of three subjects that has the optic fiber placed in the left side of the brain
 
-#
+# the three subjects are:
+# B191120
+# B201120
+# B231020
+# A031120
+# A301020
+# there are two runs, run-01 and run-02
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-01_flirt.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-02_flirt.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-01_flirt.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B201120_run-02_flirt.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-01_flirt.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B231020_run-02_flirt.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-01_flirt.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A031120_run-02_flirt.nii.gz
+
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-01_flirt.nii.gz
+fslswapdim -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/A301020_run-02_flirt.nii.gz
+
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 # add the group name to the files so it is easier to make group comparisons
 python3 ${1}/Kevin/kevin_rs-fMRI/change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_ants 0 7
 python3 ${1}/Kevin/kevin_rs-fMRI/change_files_to_contain_gp_name.py ${1}/Kevin/resting_state_gp_analysis_flirt 0 7
@@ -78,22 +130,6 @@ ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-01_flirt.nii.gz >> ${1}/Ke
 
 ls ${1}/Kevin/resting_state_gp_analysis_flirt/A_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-02.txt
 ls ${1}/Kevin/resting_state_gp_analysis_flirt/B_*_run-02_flirt.nii.gz >> ${1}/Kevin/resting_state_gp_analysis_flirt/DR_list_flirt_run-02.txt
-
-# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# changing the orientation of three subjects that has the optic fiber placed in the left side of the brain
-
-# the three subjects are:
-# B191120
-# B201120
-# B231020
-# there are two runs, run-01 and run-02
-
-
-
-
-
-
-
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
