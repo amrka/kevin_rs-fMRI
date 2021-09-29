@@ -45,7 +45,7 @@ done
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # changing the orientation of three subjects that has the optic fiber placed in the left side of the brain
 
-# the three subjects are:
+# the five subjects are:
 # B191120
 # B201120
 # B231020
@@ -82,7 +82,7 @@ done
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # changing the orientation of three subjects that has the optic fiber placed in the left side of the brain
 
-# the three subjects are:
+# the five subjects are:
 # B191120
 # B201120
 # B231020
