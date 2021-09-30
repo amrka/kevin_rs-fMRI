@@ -31,11 +31,11 @@ MatlabCommand.set_default_matlab_cmd("matlab -nodesktop -nosplash")
 
 def help_message():
     print("""Input argument missing \n
-    >>> python resting_state_gp_ICA_DR_00012.py <directory of Kevin> \n
+    >>> python resting_state_gp_ICA_DR_00013.py <directory of Kevin> \n
     Examples (from different OS):
-    >>> python resting_state_gp_ICA_DR_00012.py /Volumes/Amr_1TB
-    >>> python resting_state_gp_ICA_DR_00012.py /home/in/aeed/Work
-    >>> python resting_state_gp_ICA_DR_00012.py /media/amr/Amr_4TB/Work
+    >>> python resting_state_gp_ICA_DR_00013.py /Volumes/Amr_1TB
+    >>> python resting_state_gp_ICA_DR_00013.py /home/in/aeed/Work
+    >>> python resting_state_gp_ICA_DR_00013.py /media/amr/Amr_4TB/Work
     """)
 
 
