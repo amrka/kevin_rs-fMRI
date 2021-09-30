@@ -92,6 +92,7 @@ done
 # B231020
 # A031120
 # A301020
+# A241120
 # there are two runs, run-01 and run-02
 
 fslswapdim ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-01_flirt.nii.gz -x y z ${1}/Kevin/resting_state_gp_analysis_flirt/B191120_run-01_flirt.nii.gz
