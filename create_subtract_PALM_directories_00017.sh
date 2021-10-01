@@ -23,6 +23,7 @@ Usage() {
 
 cd ${1}/Kevin
 
+rm -r palm_ants/subtract
 mkdir -p palm_ants/subtract/{dim_10,dim_15,dim_20,dim_25,dim_40,dim_50,dim_100}
 
 
