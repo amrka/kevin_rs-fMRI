@@ -20,7 +20,7 @@ Usage() {
 [ "$1" = "" ] && Usage
 
 # first create an appropriate directory for the results
-
+rm -r ${1}/Kevin/subtraction
 mkdir -p ${1}/Kevin/subtraction/{_dim_10,_dim_15,_dim_20,_dim_25,_dim_40,_dim_50,_dim_100}
 
 
