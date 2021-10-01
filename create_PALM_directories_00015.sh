@@ -23,6 +23,8 @@ Usage() {
 
 cd ${1}/Kevin
 
+rm -r palm_ants
+
 mkdir palm_ants
 mkdir -p palm_ants/run-01/{dim_10,dim_15,dim_20,dim_25,dim_40,dim_50,dim_100}
 mkdir -p palm_ants/run-02/{dim_10,dim_15,dim_20,dim_25,dim_40,dim_50,dim_100}
