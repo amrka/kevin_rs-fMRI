@@ -8,7 +8,7 @@ Usage() {
     echo "you pass the Kevin dir parent, ants or flirt, and no of dims"
     echo ""
     echo "Usage:"
-    echo ">>> ./visualize_melodic_gp_components_00013.sh /Volumes/Amr_1TB ants 10"
+    echo ">>> ./visualize_melodic_gp_components_00014.sh /Volumes/Amr_1TB ants 10"
     echo ""
     exit 1
 }
