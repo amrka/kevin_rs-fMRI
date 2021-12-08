@@ -6,9 +6,9 @@ path(path, fsldirmpath);
 clear fsldir fsldirmpath;
 
 
-addpath /Users/amr/Downloads/FSLNets              % wherever you've put this package
-addpath /Users/amr/Downloads/L1precision            % L1precision toolbox
-addpath /Users/amr/Downloads/pwling                 % pairwise causality toolbox
+addpath /Users/aeed/Downloads/FSLNets              % wherever you've put this package
+addpath /Users/aeed/Downloads/L1precision            % L1precision toolbox
+addpath /Users/aeed/Downloads/pwling                 % pairwise causality toolbox
 addpath(sprintf('%s/etc/matlab',getenv('FSLDIR')))
 %%
 n_dims = 25
@@ -164,4 +164,4 @@ grot1=netmat(1:Ngroup1,i); grot2=netmat(Ngroup1+1:end,i);
 grotl=max(length(grot1),length(grot2));
 grot1=[grot1;nan(grotl-length(grot1),1)]; grot2=[grot2;nan(grotl-length(grot2),1)];
 grot_both = [grot1, grot2]
-%csvwrite('/Users/amr/Dropbox/thesis/resting/FSLNets_pics/regularized_partial_corr_14_7.csv', grot_both)
+%csvwrite('/Users/aeed/Dropbox/thesis/resting/FSLNets_pics/regularized_partial_corr_14_7.csv', grot_both)
