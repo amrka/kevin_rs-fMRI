@@ -12,13 +12,14 @@ addpath /Users/aeed/Downloads/pwling                 % pairwise causality toolbo
 addpath(sprintf('%s/etc/matlab',getenv('FSLDIR')))
 %%
 n_dims = 25
-system('dir=/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/;/Users/aeed/Documents/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Users/aeed/Documents/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
+sess = "d0f02a8721eff087f281113015c672685b8a198b"
+system('n_dims=25; dir=/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_${n_dims}/melodic_group/;/Users/aeed/Documents/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Users/aeed/Documents/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
 
-group_maps='/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC';     % spatial maps 4D NIFTI file, e.g. from group-ICA No extension needed
+group_maps="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC";     % spatial maps 4D NIFTI file, e.g. from group-ICA No extension needed
    %%% you must have already run the following (outside MATLAB), to create summary pictures of the maps in the NIFTI file:
    %%% slices_summary <group_maps> 4 $FSLDIR/data/standard/MNI152_T1_2mm <group_maps>.sum
 % run-01
-ts_dir='/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/d0f02a8721eff087f281113015c672685b8a198b/dual_regression/output';                           % dual regression output directory, containing all subjects' timeseries
+ts_dir="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/" + sess + "/dual_regression/output";                           % dual regression output directory, containing all subjects' timeseries
 
 %%%% [tail: illegal offset -- +] error can be avoided by adding -1 to summary_slices command
 %%% it will return one slice image per component instead of three, but here will be no errors
@@ -59,9 +60,9 @@ netmats_rP=  nets_netmats(ts,1,'ridgep', 0.1);     % Ridge Regression partial, w
 %%
 % save matrices fro future use
 
-save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25_netmats_F.mat', 'netmats_F')
-save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25_netmats_P.mat', 'netmats_P')
-save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25_netmats_rP.mat', 'netmats_rP')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_25_netmats_F.mat", 'netmats_F')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_25_netmats_P.mat", 'netmats_P')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_25_netmats_rP.mat", 'netmats_rP')
 
 % save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25__netmats3.mat', 'netmats3')
 %%
@@ -80,9 +81,9 @@ save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subjec
 % it was not working on mac (it shows the hierarchy without the components pics), but worked on linux, becaause the versions of fslnets were different
 % obivously in Mac's more recent version, the nets_hierarchy.m script was changed and requires 3 slices images
 % the problem was resolved once I replaced that version of nets_hierarchy with the linux one (the other one is renamed _net_hierarchy.m )
-nets_hierarchy(Znet_F,Znet_P,ts.DD,'/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC');
-nets_hierarchy(Znet_F,Znet_rP,ts.DD,'/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC');
-nets_hierarchy(Znet_P,Znet_rP,ts.DD,'/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC');
+nets_hierarchy(Znet_F,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
+nets_hierarchy(Znet_F,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
+nets_hierarchy(Znet_P,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
 
 
 %%% view interactive netmat web-based display
@@ -92,8 +93,8 @@ nets_hierarchy(Znet_P,Znet_rP,ts.DD,'/Users/aeed/Documents/Kevin/resting_state_m
 % >>> >>> python -m http.server
 % then go to the webbrowser and type http://localhost:8000/
 % http://127.0.0.1:8000/ sometimes work better
-nets_netweb(Znet_F,Znet_P,ts.DD,'/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC','/Applications/XAMPP/htdocs/run-01_dim_25_netweb_F_P');
-nets_netweb(Znet_F,Znet_rP,ts.DD,'/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/melodic_IC','/Applications/XAMPP/htdocs/run-01_dim_25_netweb_F_rP');
+nets_netweb(Znet_F,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Applications/XAMPP/htdocs/run-01_dim_" + n_dims + "_netweb_F_P");
+nets_netweb(Znet_F,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Applications/XAMPP/htdocs/run-01_dim_" + n_dims + "_netweb_F_rP");
 
 
 %%% cross-subject GLM, with inference in randomise (assuming you already have the GLM design.mat and design.con files).
