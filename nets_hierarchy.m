@@ -20,7 +20,7 @@ colour_threshold=0.75;
 if nargin>4
   colour_threshold=varargin{1};
 end
- 
+
 %grot=prctile(abs(netmatL(:)),99); sprintf('99th%% abs value below diagonal is %f',grot)
 %netmatL=netmatL/grot;
 %grot=prctile(abs(netmatH(:)),99); sprintf('99th%% abs value above diagonal is %f',grot)
@@ -44,7 +44,7 @@ if exist(sumpics) > 0
   end
 end
 
-figure('position',[10 10 1000 500]);  clear y;  N=size(netmatL,1);  gap=.5/(N+1);  
+figure('position',[10 10 1000 500]);  clear y;  N=size(netmatL,1);  gap=.5/(N+1);
 grot=prctile(abs(usenet(:)),99); usenet=max(min(usenet/grot,1),-1)/2;
 for J = 1:N, for I = 1:J-1,   y((I-1)*(N-I/2)+J-I) = 0.5 - usenet(I,J);  end; end;
   yyRSN=linkage(y,'ward');
@@ -62,7 +62,7 @@ subplot('position',[gap 0 1-2*gap H1-0.01]); i=dpRSN;
   grotc=colormap;  grotc(end,:)=[.8 .8 .8];  colormap(grotc);  imagesc(grot,[-1 1]); axis off; daspect('auto');
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  fname = sprintf('/Volumes/Amr_1TB/Kevin/FSLNets_pics/%s_%s_grot.mat', inputname(1), inputname(2)); %%%added by amr to name the variable for plotting after input
+  fname = sprintf('/Users/aeed/Documents/Kevin/FSLNets_pics/%s_%s_grot.mat', inputname(1), inputname(2)); %%%added by amr to name the variable for plotting after input
   save(fname,'grot')  %%%added by amr to name the variable for plotting after input
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 grott=sprintf('%s.png',tempname);
@@ -73,4 +73,3 @@ grott=sprintf('%s.png',tempname);
 set(gcf,'PaperPositionMode','auto');
 
 %print('-dpng',sprintf('hier.png'));
-
