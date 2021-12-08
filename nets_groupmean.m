@@ -62,6 +62,7 @@ if gofigure>0
     if sum(sum(abs(Znetd)-abs(Znetd')))<0.00000001    % .....and symmetric
       imagesc(Znetd,[-10 10]);  colormap('jet');  colorbar;
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      system("mkdir /Users/aeed/Documents/Kevin/FSLNets_pics")
       fname = sprintf('/Users/aeed/Documents/Kevin/FSLNets_pics/%s_%s_grot.mat/FSLNets_pics/%s_Znetd.mat', inputname(1)); %%%added by amr to name the variable for plotting after input
       save(fname,'Znetd')  %%%added by amr to name the variable for plotting after input
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
