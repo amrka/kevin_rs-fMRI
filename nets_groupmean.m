@@ -36,7 +36,7 @@ if Nsubgroup>1
 end
 
 %[grotH,grotP,grotCI,grotSTATS]=ttest(grot,0);  Tnet=grotSTATS.tstat;  Tnet(isfinite(Tnet)==0)=0;
-Tnet = sqrt(size(grot,1)) * mean(grot) ./ std(grot); 
+Tnet = sqrt(size(grot,1)) * mean(grot) ./ std(grot);
 
 Mnet=mean(grot);
 
@@ -62,7 +62,7 @@ if gofigure>0
     if sum(sum(abs(Znetd)-abs(Znetd')))<0.00000001    % .....and symmetric
       imagesc(Znetd,[-10 10]);  colormap('jet');  colorbar;
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-      fname = sprintf('/Volumes/Amr_1TB/Kevin/FSLNets_pics/%s_%s_grot.mat/FSLNets_pics/%s_Znetd.mat', inputname(1)); %%%added by amr to name the variable for plotting after input
+      fname = sprintf('/Users/aeed/Documents/Kevin/FSLNets_pics/%s_%s_grot.mat/FSLNets_pics/%s_Znetd.mat', inputname(1)); %%%added by amr to name the variable for plotting after input
       save(fname,'Znetd')  %%%added by amr to name the variable for plotting after input
       %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
@@ -70,9 +70,8 @@ if gofigure>0
   title('z-stat from one-group t-test');
 
   % scatter plot of each session's netmat vs the mean netmat
-  subplot(1,2,2); 
+  subplot(1,2,2);
   grot=repmat(mean(netmats),Nsub,1);
   scatter(netmats(:),grot(:));
   title('scatter of each session''s netmat vs mean netmat');
 end
-
