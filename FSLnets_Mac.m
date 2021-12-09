@@ -66,11 +66,11 @@ netmats_rP=  nets_netmats(ts,1,'ridgep', 0.1);     % Ridge Regression partial, w
 %%
 % save matrices fro future use
 
-save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_25_netmats_F.mat", 'netmats_F')
-save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_25_netmats_P.mat", 'netmats_P')
-save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_25_netmats_rP.mat", 'netmats_rP')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats_F.mat", 'netmats_F')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats_P.mat", 'netmats_P')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats_rP.mat", 'netmats_rP')
 
-% save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_25/melodic_group/run-01_dim_25__netmats3.mat', 'netmats3')
+% save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats3.mat', 'netmats3')
 %%
 %%% view of consistency of netmats across subjects; returns t-test Z values as a network matrix
 %%% second argument (0 or 1) determines whether to display the Z matrix and a consistency scatter plot
