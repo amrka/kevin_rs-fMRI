@@ -13,7 +13,7 @@ addpath /Users/aeed/Downloads/L1precision            % L1precision toolbox
 addpath /Users/aeed/Downloads/pwling                 % pairwise causality toolbox
 addpath(sprintf('%s/etc/matlab',getenv('FSLDIR')))
 %%
-n_dims = 10
+n_dims = 20
 % sess = "d0f02a8721eff087f281113015c672685b8a198b"    % run1
 sess = "43ddee1b109476bbf41ba6bf431ef9eefb2055bd" % run2
 
@@ -23,7 +23,7 @@ elseif  sess == "43ddee1b109476bbf41ba6bf431ef9eefb2055bd"
   run = 2
 end
 
-system('n_dims=10; dir=/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_${n_dims}/melodic_group/;/Users/aeed/Documents/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Users/aeed/Documents/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
+system('n_dims=20; dir=/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_${n_dims}/melodic_group/;/Users/aeed/Documents/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Users/aeed/Documents/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
 
 group_maps="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC";     % spatial maps 4D NIFTI file, e.g. from group-ICA No extension needed
    %%% you must have already run the following (outside MATLAB), to create summary pictures of the maps in the NIFTI file:
@@ -57,6 +57,7 @@ ts=nets_tsclean(ts,1);                   % regress the bad nodes out of the good
                                          %    b) denote any "unknown" nodes as bad nodes - i.e. list them in ts.DD and not in ts.UNK
                                          %    (for discussion on this, see Griffanti NeuroImage 2014.)
 nets_nodepics(ts,group_maps);            % quick views of the good and bad components
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_comps")
 ts_spectra=nets_spectra(ts);             % have a look at mean spectra after this cleanup
 export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_spectrum_after_cleaning")
 
