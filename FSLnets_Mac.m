@@ -11,10 +11,17 @@ addpath /Users/aeed/Downloads/L1precision            % L1precision toolbox
 addpath /Users/aeed/Downloads/pwling                 % pairwise causality toolbox
 addpath(sprintf('%s/etc/matlab',getenv('FSLDIR')))
 %%
-n_dims = 25
+n_dims = 10
 sess = "d0f02a8721eff087f281113015c672685b8a198b"    % run1
 % sess = "43ddee1b109476bbf41ba6bf431ef9eefb2055bd" % run2
-system('n_dims=25; dir=/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_${n_dims}/melodic_group/;/Users/aeed/Documents/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Users/aeed/Documents/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
+
+if sess == "d0f02a8721eff087f281113015c672685b8a198b"
+  run = 1
+elseif  sess == "43ddee1b109476bbf41ba6bf431ef9eefb2055bd"
+  run = 2
+end
+
+system('n_dims=10; dir=/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_${n_dims}/melodic_group/;/Users/aeed/Documents/Kevin/kevin_rs-fMRI/slices_summary ${dir}melodic_IC 3 /Users/aeed/Documents/Kevin/std_master.nii ${dir}melodic_IC.sum -1')
 
 group_maps="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC";     % spatial maps 4D NIFTI file, e.g. from group-ICA No extension needed
    %%% you must have already run the following (outside MATLAB), to create summary pictures of the maps in the NIFTI file:
@@ -99,8 +106,8 @@ nets_hierarchy(Znet_P,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_m
 % >>> >>> python -m http.server
 % then go to the webbrowser and type http://localhost:8000/
 % http://127.0.0.1:8000/ sometimes work better
-nets_netweb(Znet_F,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Applications/XAMPP/htdocs/run-01_dim_" + n_dims + "_netweb_F_P");
-nets_netweb(Znet_F,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Applications/XAMPP/htdocs/run-01_dim_" + n_dims + "_netweb_F_rP");
+nets_netweb(Znet_F,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Users/aeed/Documents/Kevin/FSLNets_pics/run-01_dim_" + n_dims + "_netweb_F_P");
+nets_netweb(Znet_F,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Users/aeed/Documents/Kevin/FSLNets_pics/run-01_dim_" + n_dims + "_netweb_F_rP");
 
 
 %%% cross-subject GLM, with inference in randomise (assuming you already have the GLM design.mat and design.con files).
