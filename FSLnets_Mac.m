@@ -73,11 +73,11 @@ netmats_rP=  nets_netmats(ts,1,'ridgep', 0.1);     % Ridge Regression partial, w
 %%
 % save matrices fro future use
 
-save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats_F.mat", 'netmats_F')
-save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats_P.mat", 'netmats_P')
-save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats_rP.mat", 'netmats_rP')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-" + run + "_dim_" + n_dims + "_netmats_F.mat", 'netmats_F')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-" + run + "_dim_" + n_dims + "_netmats_P.mat", 'netmats_P')
+save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-" + run + "_dim_" + n_dims + "_netmats_rP.mat", 'netmats_rP')
 
-% save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-01_dim_" + n_dims + "_netmats3.mat', 'netmats3')
+% save('/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/run-" + run + "_dim_" + n_dims + "_netmats3.mat', 'netmats3')
 %%
 %%% view of consistency of netmats across subjects; returns t-test Z values as a network matrix
 %%% second argument (0 or 1) determines whether to display the Z matrix and a consistency scatter plot
@@ -106,8 +106,8 @@ nets_hierarchy(Znet_P,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_m
 % >>> >>> python -m http.server
 % then go to the webbrowser and type http://localhost:8000/
 % http://127.0.0.1:8000/ sometimes work better
-nets_netweb(Znet_F,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Users/aeed/Documents/Kevin/FSLNets_pics/run-01_dim_" + n_dims + "_netweb_F_P");
-nets_netweb(Znet_F,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Users/aeed/Documents/Kevin/FSLNets_pics/run-01_dim_" + n_dims + "_netweb_F_rP");
+nets_netweb(Znet_F,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Users/aeed/Documents/Kevin/FSLNets_pics/run-" + run + "_dim_" + n_dims + "_netweb_F_P");
+nets_netweb(Znet_F,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC","/Users/aeed/Documents/Kevin/FSLNets_pics/run-" + run + "_dim_" + n_dims + "_netweb_F_rP");
 
 
 %%% cross-subject GLM, with inference in randomise (assuming you already have the GLM design.mat and design.con files).
