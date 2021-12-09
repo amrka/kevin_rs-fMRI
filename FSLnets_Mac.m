@@ -34,7 +34,12 @@ ts_spectra=nets_spectra(ts);   % have a look at mean timeseries spectra
 
 %%
 %%% cleanup and remove bad nodes' timeseries (whichever is NOT listed in ts.DD is *BAD*).
-ts.DD=[1:25];  % list the good nodes in your group-ICA output (counting starts at 1, not 0)
+% I wrote a txt file with good components and matched the dim with the line number, so line 10 -> contains the good comp of dim 10 and so on
+good_comps_file = '/Users/aeed/Documents/Kevin/kevin_rs-fMRI/good_components.txt';
+good_comps = fileread(good_comps_file);
+good_comps = regexp(good_comps,'\n','split');
+
+ts.DD=str2num(good_comps{n_dims});  % list the good nodes in your group-ICA output (counting starts at 1, not 0)
 % ts.UNK=[10];  optionally setup a list of unknown components (where you're unsure of good vs bad)
 ts=nets_tsclean(ts,1);                   % regress the bad nodes out of the good, and then remove the bad nodes' timeseries (1=aggressive, 0=unaggressive (just delete bad)).
                                          % For partial-correlation netmats, if you are going to do nets_tsclean, then it *probably* makes sense to:
