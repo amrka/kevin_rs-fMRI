@@ -7,6 +7,7 @@
 % ts: data structure containing information about nodes, timeseries and discarded nodes
 % group_maps: string pointing at folder containing thumbnails (without the .sum at the end)
 %
+% I modified it to display good comps only
 
 function [netmat] = nets_nodepics(ts,group_maps);
 
@@ -24,4 +25,3 @@ figure('Position',[10 10 3*size(pic,2) 3*size(pic,1)]); subplot('Position',[0 0 
 %end
 
 system(sprintf('/bin/rm %s*',grot));
-
