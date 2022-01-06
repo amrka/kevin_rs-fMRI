@@ -154,9 +154,9 @@ nets_edgepics(ts,group_maps,Znet_rP,reshape(p_corrected_rP(2,:),ts.Nnodes,ts.Nno
 %%% arg1 is whichever netmats you want to test.
 %%% arg2 is the size of first group of subjects; set to 0 if you have two groups with paired subjects.
 %%% arg3 determines which LDA method to use (help nets_lda to see list of options)
-[lda_percentages]=nets_lda(netmats_F,14,7)
-[lda_percentages]=nets_lda(netmats_P,14,7)
-[lda_percentages]=nets_lda(netmats_rP,14,7)
+% [lda_percentages]=nets_lda(netmats_F,14,7)
+% [lda_percentages]=nets_lda(netmats_P,14,7)
+% [lda_percentages]=nets_lda(netmats_rP,14,7)
 
 % [lda_percentages]=nets_lda(netmats3,14,7)
 
@@ -167,23 +167,23 @@ nets_edgepics(ts,group_maps,Znet_rP,reshape(p_corrected_rP(2,:),ts.Nnodes,ts.Nno
 %%% arg5 = size of the first group (set to -1 for paired groups)
 
 %% third argument is number of subjects in gp 1
-nets_boxplots(ts,netmats_F,14,7,16);
-nets_boxplots(ts,netmats_P,14,7,16);
-nets_boxplots(ts,netmats_rP,14,7,16);
+% nets_boxplots(ts,netmats_F,14,7,16);
+% nets_boxplots(ts,netmats_P,14,7,16);
+% nets_boxplots(ts,netmats_rP,14,7,16);
 
 %print('-depsc',sprintf('boxplot-%d-%d.eps',IC1,IC2));  % example syntax for printing to file
 %%
 % get the two groups variable that are used to construct the boxplots
-IC1=14, IC2=7
-Ngroup1 = 16 %number of animals in group 1
-netmat= netmats_rP
+% IC1=14, IC2=7
+% Ngroup1 = 16 %number of animals in group 1
+% netmat= netmats_rP
 
 
-i=(IC1-1)*ts.Nnodes + IC2;
+% i=(IC1-1)*ts.Nnodes + IC2;
 
 % get values for boxplots, padding with NaN for unequal groups (otherwise boxplot doesn't work)
-grot1=netmat(1:Ngroup1,i); grot2=netmat(Ngroup1+1:end,i);
-grotl=max(length(grot1),length(grot2));
-grot1=[grot1;nan(grotl-length(grot1),1)]; grot2=[grot2;nan(grotl-length(grot2),1)];
-grot_both = [grot1, grot2]
+% grot1=netmat(1:Ngroup1,i); grot2=netmat(Ngroup1+1:end,i);
+% grotl=max(length(grot1),length(grot2));
+% grot1=[grot1;nan(grotl-length(grot1),1)]; grot2=[grot2;nan(grotl-length(grot2),1)];
+% grot_both = [grot1, grot2]
 %csvwrite('/Users/aeed/Dropbox/thesis/resting/FSLNets_pics/regularized_partial_corr_14_7.csv', grot_both)
