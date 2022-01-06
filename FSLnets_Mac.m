@@ -135,8 +135,13 @@ design = '/Users/aeed/Documents/Kevin/designs/kevin_design.mat'
 contrast = '/Users/aeed/Documents/Kevin/designs/kevin_design.con'
 % I adjusted the number of permutations to 10000 from nets_glm.m
 [p_uncorrected_F,p_corrected_F]=nets_glm(netmats_F, design, contrast,1); %1 last argument is to show output or not
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_full_correlation")
+
 [p_uncorrected_P,p_corrected_P]=nets_glm(netmats_P, design, contrast,1);
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_partial_correlation")
+
 [p_uncorrected_rP,p_corrected_rP]=nets_glm(netmats_rP, design, contrast,1);
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_reg_partial_correlation")
 
 % [p_uncorrected3,p_corrected3]=nets_glm(netmats3, design, contrast,1);
 
