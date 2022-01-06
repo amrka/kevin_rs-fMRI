@@ -16,9 +16,9 @@ addpath /Users/aeed/Downloads/L1precision            % L1precision toolbox
 addpath /Users/aeed/Downloads/pwling                 % pairwise causality toolbox
 addpath(sprintf('%s/etc/matlab',getenv('FSLDIR')))
 %%
-n_dims = 20
-% sess = "d0f02a8721eff087f281113015c672685b8a198b"    % run1
-sess = "43ddee1b109476bbf41ba6bf431ef9eefb2055bd" % run2
+n_dims = 10
+sess = "d0f02a8721eff087f281113015c672685b8a198b"    % run1
+% sess = "43ddee1b109476bbf41ba6bf431ef9eefb2055bd" % run2
 
 if sess == "d0f02a8721eff087f281113015c672685b8a198b"
   run = 1
@@ -32,6 +32,7 @@ group_maps="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_
    %%% you must have already run the following (outside MATLAB), to create summary pictures of the maps in the NIFTI file:
    %%% slices_summary <group_maps> 4 $FSLDIR/data/standard/MNI152_T1_2mm <group_maps>.sum
 % run-01
+%%
 ts_dir="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/" + sess + "/dual_regression/output";                           % dual regression output directory, containing all subjects' timeseries
 
 %%%% [tail: illegal offset -- +] error can be avoided by adding -1 to summary_slices command
