@@ -37,7 +37,7 @@ ts_dir="/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subj
 %%%% [tail: illegal offset -- +] error can be avoided by adding -1 to summary_slices command
 %%% it will return one slice image per component instead of three, but here will be no errors
 %%% adding -d flag does not pan out very well, the template becomes way too much darker
-
+%%
 %%% load timeseries data from the dual regression output directory
 ts=nets_load(ts_dir,2,1);
    %%% arg2 is the TR (in seconds)
