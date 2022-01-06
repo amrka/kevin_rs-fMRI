@@ -108,8 +108,13 @@ export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "
 % obivously in Mac's more recent version, the nets_hierarchy.m script was changed and requires 3 slices images
 % the problem was resolved once I replaced that version of nets_hierarchy with the linux one (the other one is renamed _net_hierarchy.m )
 nets_hierarchy(Znet_F,Znet_F,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_full_correlation")
+
 nets_hierarchy(Znet_P,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_partial_correlation")
+
 nets_hierarchy(Znet_rP,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_reg_partial_correlation")
 
 
 %%% view interactive netmat web-based display
