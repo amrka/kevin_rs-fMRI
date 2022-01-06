@@ -1,7 +1,7 @@
 % Set up FSL environment
 % always sart Matlab from command line not the Applications icon
 % for some reason, FSL does not work with matlab when I call it from Applications
-clear 
+clear
 close all
 
 setenv( 'FSLDIR', '/usr/local/fsl');
@@ -43,7 +43,7 @@ ts=nets_load(ts_dir,2,1);
    %%% arg2 is the TR (in seconds)
    %%% arg3 controls variance normalisation: 0=none, 1=normalise whole subject stddev, 2=normalise each separate timeseries from each subject
 ts_spectra=nets_spectra(ts);   % have a look at mean timeseries spectra
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims + "_spectrum_before_cleaning")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims + "_spectrum_before_cleaning", "-m2")
 
 %%
 %%% cleanup and remove bad nodes' timeseries (whichever is NOT listed in ts.DD is *BAD*).
@@ -60,9 +60,9 @@ ts=nets_tsclean(ts,1);                   % regress the bad nodes out of the good
                                          %    b) denote any "unknown" nodes as bad nodes - i.e. list them in ts.DD and not in ts.UNK
                                          %    (for discussion on this, see Griffanti NeuroImage 2014.)
 nets_nodepics(ts,group_maps);            % quick views of the good and bad components
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_comps")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_comps", "-m2")
 ts_spectra=nets_spectra(ts);             % have a look at mean spectra after this cleanup
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_spectrum_after_cleaning")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_spectrum_after_cleaning", "-m2")
 
 %%
 %%% create various kinds of network matrices and optionally convert correlations to z-stats.
@@ -91,13 +91,13 @@ save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subjec
 %%% second argument (0 or 1) determines whether to display the Z matrix and a consistency scatter plot
 %%% third argument (optional) groups runs together; e.g. setting this to 4 means each group of 4 runs were from the same subject
 [Znet_F,Mnet_F]=nets_groupmean(netmats_F,1);      % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_full_corrleation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_full_corrleation", "-m2")
 
 [Znet_P,Mnet_P]=nets_groupmean(netmats_P,1);      % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_partial_corrleation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_partial_corrleation", "-m2")
 
 [Znet_rP,Mnet_rP]=nets_groupmean(netmats_rP,1);   % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_reg_partial_corrleation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_reg_partial_corrleation", "-m2")
 
 
 % [Znet3,Mnet3]=nets_groupmean(netmats3,1);   % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
@@ -108,13 +108,13 @@ export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "
 % obivously in Mac's more recent version, the nets_hierarchy.m script was changed and requires 3 slices images
 % the problem was resolved once I replaced that version of nets_hierarchy with the linux one (the other one is renamed _net_hierarchy.m )
 nets_hierarchy(Znet_F,Znet_F,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_full_correlation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_full_correlation", "-m2")
 
 nets_hierarchy(Znet_P,Znet_P,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_partial_correlation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_partial_correlation", "-m2")
 
 nets_hierarchy(Znet_rP,Znet_rP,ts.DD,"/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_dim_" + n_dims + "/melodic_group/melodic_IC");
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_reg_partial_correlation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_hierarchy_reg_partial_correlation", "-m2")
 
 
 %%% view interactive netmat web-based display
@@ -135,13 +135,13 @@ design = '/Users/aeed/Documents/Kevin/designs/kevin_design.mat'
 contrast = '/Users/aeed/Documents/Kevin/designs/kevin_design.con'
 % I adjusted the number of permutations to 10000 from nets_glm.m
 [p_uncorrected_F,p_corrected_F]=nets_glm(netmats_F, design, contrast,1); %1 last argument is to show output or not
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_full_correlation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_full_correlation", "-m2")
 
 [p_uncorrected_P,p_corrected_P]=nets_glm(netmats_P, design, contrast,1);
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_partial_correlation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_partial_correlation", "-m2")
 
 [p_uncorrected_rP,p_corrected_rP]=nets_glm(netmats_rP, design, contrast,1);
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_reg_partial_correlation")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_Pvalue_two-group_t-test_reg_partial_correlation", "-m2")
 
 % [p_uncorrected3,p_corrected3]=nets_glm(netmats3, design, contrast,1);
 
@@ -153,26 +153,26 @@ export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "
 %
 %%% view 6 most significant edges from this GLM
 nets_edgepics(ts,group_maps,Znet_F,reshape(p_corrected_F(1,:),ts.Nnodes,ts.Nnodes),6); %
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_full_correlation_gp1>gp2")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_full_correlation_gp1>gp2", "-m2")
 
 nets_edgepics(ts,group_maps,Znet_P,reshape(p_corrected_P(1,:),ts.Nnodes,ts.Nnodes),6);
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_partial_correlation_gp1>gp2")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_partial_correlation_gp1>gp2", "-m2")
 
 nets_edgepics(ts,group_maps,Znet_rP,reshape(p_corrected_rP(1,:),ts.Nnodes,ts.Nnodes),6);
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_reg_partial_correlation_gp1>gp2")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_reg_partial_correlation_gp1>gp2", "-m2")
 
 
 % nets_edgepics(ts,group_maps,Znet3,reshape(p_corrected3(1,:),ts.Nnodes,ts.Nnodes),6);
 
 
 nets_edgepics(ts,group_maps,Znet_F,reshape(p_corrected_F(2,:),ts.Nnodes,ts.Nnodes),6); %
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_full_correlation_gp1<gp2")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_full_correlation_gp1<gp2", "-m2")
 
 nets_edgepics(ts,group_maps,Znet_P,reshape(p_corrected_P(2,:),ts.Nnodes,ts.Nnodes),6);
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_partial_correlation_gp1<gp2")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_partial_correlation_gp1<gp2", "-m2")
 
 nets_edgepics(ts,group_maps,Znet_rP,reshape(p_corrected_rP(2,:),ts.Nnodes,ts.Nnodes),6);
-export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_reg_partial_correlation_gp1<gp2")
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_reg_partial_correlation_gp1<gp2", "-m2")
 
 % nets_edgepics(ts,group_maps,Znet3,reshape(p_corrected3(2,:),ts.Nnodes,ts.Nnodes),6);
 %%
