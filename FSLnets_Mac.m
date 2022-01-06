@@ -153,15 +153,26 @@ export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "
 %
 %%% view 6 most significant edges from this GLM
 nets_edgepics(ts,group_maps,Znet_F,reshape(p_corrected_F(1,:),ts.Nnodes,ts.Nnodes),6); %
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_full_correlation_gp1>gp2")
+
 nets_edgepics(ts,group_maps,Znet_P,reshape(p_corrected_P(1,:),ts.Nnodes,ts.Nnodes),6);
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_partial_correlation_gp1>gp2")
+
 nets_edgepics(ts,group_maps,Znet_rP,reshape(p_corrected_rP(1,:),ts.Nnodes,ts.Nnodes),6);
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_reg_partial_correlation_gp1>gp2")
+
 
 % nets_edgepics(ts,group_maps,Znet3,reshape(p_corrected3(1,:),ts.Nnodes,ts.Nnodes),6);
 
 
 nets_edgepics(ts,group_maps,Znet_F,reshape(p_corrected_F(2,:),ts.Nnodes,ts.Nnodes),6); %
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_full_correlation_gp1<gp2")
+
 nets_edgepics(ts,group_maps,Znet_P,reshape(p_corrected_P(2,:),ts.Nnodes,ts.Nnodes),6);
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_partial_correlation_gp1<gp2")
+
 nets_edgepics(ts,group_maps,Znet_rP,reshape(p_corrected_rP(2,:),ts.Nnodes,ts.Nnodes),6);
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_most_sig_reg_partial_correlation_gp1<gp2")
 
 % nets_edgepics(ts,group_maps,Znet3,reshape(p_corrected3(2,:),ts.Nnodes,ts.Nnodes),6);
 %%
