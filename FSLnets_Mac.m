@@ -1,7 +1,7 @@
 % Set up FSL environment
 % always sart Matlab from command line not the Applications icon
 % for some reason, FSL does not work with matlab when I call it from Applications
-clear all
+clear 
 close all
 
 setenv( 'FSLDIR', '/usr/local/fsl');
