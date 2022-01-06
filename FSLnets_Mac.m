@@ -91,8 +91,13 @@ save("/Users/aeed/Documents/Kevin/resting_state_melodic/melodic_workflow/_subjec
 %%% second argument (0 or 1) determines whether to display the Z matrix and a consistency scatter plot
 %%% third argument (optional) groups runs together; e.g. setting this to 4 means each group of 4 runs were from the same subject
 [Znet_F,Mnet_F]=nets_groupmean(netmats_F,1);      % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_full_corrleation")
+
 [Znet_P,Mnet_P]=nets_groupmean(netmats_P,1);      % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_partial_corrleation")
+
 [Znet_rP,Mnet_rP]=nets_groupmean(netmats_rP,1);   % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
+export_fig("/Users/aeed/Documents/Kevin/functional_conn_figures/run_0" + run + "/dim_" + n_dims + "/" + "run_0" + run + "_dim_" + n_dims +"_z-stats_one_gp_t-test_reg_partial_corrleation")
 
 
 % [Znet3,Mnet3]=nets_groupmean(netmats3,1);   % test whichever netmat you're interested in; returns Z values from one-group t-test and group-mean netmat
