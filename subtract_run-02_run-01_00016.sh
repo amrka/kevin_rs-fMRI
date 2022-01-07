@@ -47,3 +47,15 @@ for img in ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_d
 
     echo "${1}/Kevin/subtraction/_dim_${dim}/subtraction_dim_${dim}_`basename ${img}`"
 done
+
+
+# copy the dual regression *dr_stage2_ic* to melodic_workflow directory to ease working with FSLNets
+cd ${1}/Kevin/subtraction
+
+
+for dim in *;do
+  mkdir -p ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/${dim}/subtract/dual_regression/output
+  cd ${dim}
+  imcp *.nii.gz ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/${dim}/subtract/dual_regression/output
+  cd ..
+done
