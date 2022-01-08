@@ -49,7 +49,8 @@ for img in ${1}/Kevin/resting_state_melodic/melodic_workflow/_subject_id_ants/_d
 done
 
 
-# copy the dual regression *dr_stage2_ic* to melodic_workflow directory to ease working with FSLNets
+# copy the dual regression *dr_stage2_ic* to melodic_workflow directory to have consistency
+
 cd ${1}/Kevin/subtraction
 
 
